@@ -20,10 +20,6 @@ namespace ProjectFood
 
             host.Run();
         }
-
-        public static void Method()
-        {
-            int hej;
-        }
+        
     }
 }
