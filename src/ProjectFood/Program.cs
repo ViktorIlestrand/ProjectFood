@@ -23,7 +23,7 @@ namespace ProjectFood
 
         public static void Method()
         {
-
+            int hej;
         }
     }
 }
