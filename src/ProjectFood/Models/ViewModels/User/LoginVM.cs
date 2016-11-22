@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ProjectFood.Models.ViewModels
+namespace ProjectFood.Models.ViewModels.User
 {
-    public class UserLoginVM
+    public class LoginVM
     {
         [EmailAddress]
         [DataType(DataType.EmailAddress)]
