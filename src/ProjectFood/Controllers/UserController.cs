@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using ProjectFood.Models.ViewModels;
+using ProjectFood.Models.ViewModels.User;
 
 namespace ProjectFood.Controllers
 {
@@ -32,6 +33,24 @@ namespace ProjectFood.Controllers
             return $"You are logged in as {User.Identity.Name}";
         }
 
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterVM viewModel)
+        {
+            if (!ModelState.IsValid)
+                return View(viewModel);
+
+            var user = new IdentityUser(viewModel.UserName);
+            var result = await userManager.CreateAsync(user, viewModel.Password);
+
+            else return View();
+        }
+
         [AllowAnonymous]
         [HttpGet]
         public IActionResult Login()
@@ -41,7 +60,7 @@ namespace ProjectFood.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> Login(UserLoginVM viewModel, string returnUrl)
+        public async Task<IActionResult> Login(LoginVM viewModel, string returnUrl)
         {
             if (!ModelState.IsValid)
                 return View(viewModel);
@@ -60,7 +79,7 @@ namespace ProjectFood.Controllers
 
             if (!result.Succeeded)
             {
-                ModelState.AddModelError(nameof(UserLoginVM.Email),
+                ModelState.AddModelError(nameof(LoginVM.Email),
                     "Incorrect login credentials");
                 return View(viewModel);
             }

@@ -1,5 +1,23 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model ProjectFood.Models.ViewModels.User.RegisterVM
+
+<body>
+    <h1>Skapa ny Användare</h1>
+    <form asp-controller="user" asp-action="register">
+        <label asp-for="UserName"></label>
+        <input asp-for="UserName" />
+        <span asp-validation-for="UserName"></span>
+        <br/>
+        <label asp-for="Email"></label>
+        <input asp-for="Email" />
+        <span asp-validation-for="Email"></span>
+        <br />
+        <label asp-for="Password"></label>
+        <input asp-for="Password" />
+        <span asp-validation-for="Password"></span>
+        <br />
+        <label asp-for="ComparedPassword"></label>
+        <input asp-for="ComparedPassword" />
+        <span asp-validation-for="ComparedPassword"></span>
+        <input type="submit" value="Skapa Användare" />
+    </form>
+</body>
