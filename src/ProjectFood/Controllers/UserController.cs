@@ -16,13 +16,13 @@ namespace ProjectFood.Controllers
         UserManager<IdentityUser> userManager;
         SignInManager<IdentityUser> signInManager;
         IdentityDbContext identityContext;
-        PatoDBContext context;
+        //PatoDBContext context;
 
-        public UserController(PatoDBContext context, UserManager<IdentityUser> usermanager, SignInManager<IdentityUser> signinmanager, IdentityDbContext identitycontext)
+        public UserController(IdentityDbContext identitycontext, UserManager<IdentityUser> usermanager, SignInManager<IdentityUser> signinmanager)
         {
             userManager = usermanager;
             signInManager = signinmanager;
-            this.context = context;
+            //this.context = context;
             identityContext = identitycontext;
 
         }
@@ -46,29 +46,29 @@ namespace ProjectFood.Controllers
             if (!ModelState.IsValid)
                 return View(viewModel);
 
-            // Skapa DB-schemat
-            await identityContext.Database.EnsureCreatedAsync();
+            #region createonce
+            //// Skapa DB-schemat
+            //await identityContext.Database.EnsureCreatedAsync();
 
-            // Create user
-            var user = new IdentityUser("Admin@admin.com");
-            var result = await userManager.CreateAsync(user, "Sommar2016!");
+            //// Create user
+            //var user = new IdentityUser("Admin@admin.com");
+            //var result = await userManager.CreateAsync(user, "Sommar2016!");
+            #endregion
 
-            //var result = await signInManager.PasswordSignInAsync(
-            //    viewModel.Email, viewModel.Password, false, false);
+            var result = await signInManager.PasswordSignInAsync(
+                viewModel.Email, viewModel.Password, false, false);
 
-            //if (!result.Succeeded)
-            //{
-            //    ModelState.AddModelError(nameof(UserLoginVM.Email),
-            //        "Incorrect login credentials");
-            //    return View(viewModel);
-            //}
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError(nameof(UserLoginVM.Email),
+                    "Incorrect login credentials");
+                return View(viewModel);
+            }
 
-            //if (string.IsNullOrWhiteSpace(returnUrl))
-            //    return RedirectToAction(nameof(UserController.Index));
-            //else
-            //    return Redirect(returnUrl);
-
-            return Redirect(returnUrl);
+            if (string.IsNullOrWhiteSpace(returnUrl))
+                return RedirectToAction(nameof(UserController.Index));
+            else
+                return Redirect(returnUrl);
         }
     }
 }
