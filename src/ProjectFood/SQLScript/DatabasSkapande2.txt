@@ -1,0 +1,78 @@
+CREATE Schema Loula
+
+CREATE TABLE [Loula].[Category] (
+    [Id]   INT          IDENTITY (1, 1) NOT NULL,
+    [Name] VARCHAR (50) NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+CREATE TABLE [Loula].[FoodItem] (
+    [Id]   INT          IDENTITY (1, 1) NOT NULL,
+    [Name] VARCHAR (50) NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+CREATE TABLE [Loula].[FoodItemCategory] (
+    [Id]         INT IDENTITY (1, 1) NOT NULL,
+    [FoodItemId] INT NOT NULL,
+    [CategoryId] INT NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+CREATE TABLE [Loula].[Recipe] (
+    [Id]           INT           IDENTITY (1, 1) NOT NULL,
+    [Title]        VARCHAR (50)  NOT NULL,
+    [Instructions] VARCHAR (512) NOT NULL,
+    [Portions]     INT           NOT NULL,
+    [CookingTime]  INT           NULL,
+    [ImageURL]     VARCHAR (50)  NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+CREATE TABLE [Loula].[User] (
+    [Id]    INT          IDENTITY (1, 1) NOT NULL,
+    [Email] VARCHAR (50) NOT NULL,
+    [Name]  VARCHAR (50) NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+CREATE TABLE [Loula].[Ingredient] (
+    [Id]          INT        IDENTITY (1, 1) NOT NULL,
+    [Ingredient]  INT        NOT NULL,
+    [Measurement] INT        NOT NULL,
+    [Quantity]    FLOAT (53) NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_Ingredient_FoodItem] FOREIGN KEY ([Ingredient]) REFERENCES [Loula].[FoodItem] ([Id])
+);
+
+CREATE TABLE [Loula].[UserIngredient] (
+    [Id]         INT  IDENTITY (1, 1) NOT NULL,
+    [Ingredient] INT  NOT NULL,
+    [Expires]    DATE NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_UserIngredient_Ingredient] FOREIGN KEY ([Ingredient]) REFERENCES [Loula].[Ingredient] ([Id])
+);
+
+CREATE TABLE [Loula].[RecipeIngredient] (
+    [Id]            INT IDENTITY (1, 1) NOT NULL,
+    [Ingredient_ID] INT NOT NULL,
+    [Recipe_ID]     INT NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_RecipeIngredient_Ingredient] FOREIGN KEY ([Ingredient_ID]) REFERENCES [Loula].[Ingredient] ([Id]),
+    CONSTRAINT [FK_RecipeIngredient_Recipe] FOREIGN KEY ([Recipe_ID]) REFERENCES [Loula].[Recipe] ([Id])
+);
+CREATE TABLE [Loula].[RecipeCategory] (
+    [Id]          INT IDENTITY (1, 1) NOT NULL,
+    [Category_ID] INT NOT NULL,
+    [Recipe_ID]   INT NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_RecipeCategory_Category] FOREIGN KEY ([Category_ID]) REFERENCES [Loula].[Category] ([Id]),
+    CONSTRAINT [FK_RecipeCategory_Recipe] FOREIGN KEY ([Recipe_ID]) REFERENCES [Loula].[Recipe] ([Id])
+);
+
+CREATE TABLE [Loula].[KitchenStorage] (
+    [Id]               INT IDENTITY (1, 1) NOT NULL,
+    [UserIngredientID] INT NOT NULL,
+    [UserID]           INT NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_KitchenStorage_UserIngredient] FOREIGN KEY ([UserIngredientID]) REFERENCES [Loula].[UserIngredient] ([Id]),
+    CONSTRAINT [FK_KitchenStorage_User] FOREIGN KEY ([UserID]) REFERENCES [Loula].[User] ([Id])
+);
