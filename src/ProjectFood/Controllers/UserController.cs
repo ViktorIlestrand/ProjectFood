@@ -21,13 +21,17 @@ namespace ProjectFood.Controllers
         PatoDBContext context;
         private readonly ILogger _logger;
 
-        public UserController(PatoDBContext context, IdentityDbContext identitycontext, UserManager<IdentityUser> usermanager, SignInManager<IdentityUser> signinmanager)
+        public UserController(PatoDBContext context, 
+            IdentityDbContext identitycontext, 
+            UserManager<IdentityUser> usermanager, 
+            SignInManager<IdentityUser> signinmanager,
+            ILoggerFactory loggerFactory)
         {
             userManager = usermanager;
             signInManager = signinmanager;
             this.context = context;
             identityContext = identitycontext;
-
+            _logger = loggerFactory.CreateLogger<UserController>();
         }
 
         public string Index()
