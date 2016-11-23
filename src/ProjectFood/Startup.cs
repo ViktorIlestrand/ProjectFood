@@ -28,7 +28,7 @@ namespace ProjectFood
             services.AddIdentity<IdentityUser, IdentityRole>(options => {
                 options.Password.RequiredLength = 6;
                 options.Password.RequireLowercase = true;
-                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = true;
                 options.Cookies.ApplicationCookie.LoginPath = "/user/login";
             })
