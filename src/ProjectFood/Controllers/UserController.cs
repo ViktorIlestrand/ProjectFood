@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using ProjectFood.Models.ViewModels;
 using ProjectFood.Models.ViewModels.User;
+using Microsoft.Extensions.Logging;
 
 namespace ProjectFood.Controllers
 {
@@ -18,6 +19,7 @@ namespace ProjectFood.Controllers
         SignInManager<IdentityUser> signInManager;
         IdentityDbContext identityContext;
         PatoDBContext context;
+        private readonly ILogger _logger;
 
         public UserController(PatoDBContext context, IdentityDbContext identitycontext, UserManager<IdentityUser> usermanager, SignInManager<IdentityUser> signinmanager)
         {
@@ -111,6 +113,16 @@ namespace ProjectFood.Controllers
                 return RedirectToAction(nameof(MyKitchen));
             else
                 return RedirectToAction(nameof(MyKitchen));
+        }
+
+        // POST: /Account/LogOff
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> LogOff()
+        {
+            await signInManager.SignOutAsync();
+            _logger.LogInformation(4, "User logged out.");
+            return RedirectToAction(nameof(UserController.Index), "Home");
         }
     }
 }
