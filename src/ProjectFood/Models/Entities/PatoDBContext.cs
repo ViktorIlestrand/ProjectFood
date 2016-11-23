@@ -16,6 +16,8 @@ namespace ProjectFood.Models.Entities
         {
             modelBuilder.Entity<Category>(entity =>
             {
+                entity.ToTable("Category", "Loula");
+
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasColumnType("varchar(50)");
@@ -23,13 +25,22 @@ namespace ProjectFood.Models.Entities
 
             modelBuilder.Entity<FoodItem>(entity =>
             {
+                entity.ToTable("FoodItem", "Loula");
+
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasColumnType("varchar(50)");
             });
 
+            modelBuilder.Entity<FoodItemCategory>(entity =>
+            {
+                entity.ToTable("FoodItemCategory", "Loula");
+            });
+
             modelBuilder.Entity<Ingredient>(entity =>
             {
+                entity.ToTable("Ingredient", "Loula");
+
                 entity.Property(e => e.Ingredient1).HasColumnName("Ingredient");
 
                 entity.HasOne(d => d.Ingredient1Navigation)
@@ -41,6 +52,8 @@ namespace ProjectFood.Models.Entities
 
             modelBuilder.Entity<KitchenStorage>(entity =>
             {
+                entity.ToTable("KitchenStorage", "Loula");
+
                 entity.Property(e => e.UserId).HasColumnName("UserID");
 
                 entity.Property(e => e.UserIngredientId).HasColumnName("UserIngredientID");
@@ -60,6 +73,8 @@ namespace ProjectFood.Models.Entities
 
             modelBuilder.Entity<Recipe>(entity =>
             {
+                entity.ToTable("Recipe", "Loula");
+
                 entity.Property(e => e.ImageUrl)
                     .HasColumnName("ImageURL")
                     .HasColumnType("varchar(50)");
@@ -75,6 +90,8 @@ namespace ProjectFood.Models.Entities
 
             modelBuilder.Entity<RecipeCategory>(entity =>
             {
+                entity.ToTable("RecipeCategory", "Loula");
+
                 entity.Property(e => e.CategoryId).HasColumnName("Category_ID");
 
                 entity.Property(e => e.RecipeId).HasColumnName("Recipe_ID");
@@ -94,6 +111,8 @@ namespace ProjectFood.Models.Entities
 
             modelBuilder.Entity<RecipeIngredient>(entity =>
             {
+                entity.ToTable("RecipeIngredient", "Loula");
+
                 entity.Property(e => e.IngredientId).HasColumnName("Ingredient_ID");
 
                 entity.Property(e => e.RecipeId).HasColumnName("Recipe_ID");
@@ -113,17 +132,17 @@ namespace ProjectFood.Models.Entities
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.Property(e => e.Email)
-                    .IsRequired()
-                    .HasColumnType("varchar(50)");
+                entity.ToTable("User", "Loula");
 
-                entity.Property(e => e.Name)
+                entity.Property(e => e.AspNetId)
                     .IsRequired()
-                    .HasColumnType("varchar(50)");
+                    .HasMaxLength(450);
             });
 
             modelBuilder.Entity<UserIngredient>(entity =>
             {
+                entity.ToTable("UserIngredient", "Loula");
+
                 entity.Property(e => e.Expires).HasColumnType("date");
 
                 entity.HasOne(d => d.IngredientNavigation)

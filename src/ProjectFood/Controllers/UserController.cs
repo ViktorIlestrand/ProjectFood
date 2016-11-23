@@ -17,13 +17,13 @@ namespace ProjectFood.Controllers
         UserManager<IdentityUser> userManager;
         SignInManager<IdentityUser> signInManager;
         IdentityDbContext identityContext;
-        //PatoDBContext context;
+        PatoDBContext context;
 
-        public UserController(IdentityDbContext identitycontext, UserManager<IdentityUser> usermanager, SignInManager<IdentityUser> signinmanager)
+        public UserController(PatoDBContext context, IdentityDbContext identitycontext, UserManager<IdentityUser> usermanager, SignInManager<IdentityUser> signinmanager)
         {
             userManager = usermanager;
             signInManager = signinmanager;
-            //this.context = context;
+            this.context = context;
             identityContext = identitycontext;
 
         }
@@ -48,7 +48,21 @@ namespace ProjectFood.Controllers
             var user = new IdentityUser(viewModel.UserName);
             var result = await userManager.CreateAsync(user, viewModel.Password);
 
-            else return View();
+            if (!result.Succeeded)
+            {
+          
+                ModelState.AddModelError(nameof(RegisterVM.UserName),
+                $"{viewModel.UserName} finns redan registrerat");
+                return View(viewModel);
+            }
+            await userManager.SetEmailAsync(user, viewModel.Email);
+
+            var entityUser = new User();
+            entityUser.AspNetId = user.Id;
+            context.User.Add(entityUser);
+            context.SaveChanges();          
+                        
+            return View();
         }
 
         [AllowAnonymous]
@@ -75,12 +89,12 @@ namespace ProjectFood.Controllers
             #endregion
 
             var result = await signInManager.PasswordSignInAsync(
-                viewModel.Email, viewModel.Password, false, false);
+                viewModel.UserName, viewModel.Password, false, false);
 
             if (!result.Succeeded)
             {
-                ModelState.AddModelError(nameof(LoginVM.Email),
-                    "Incorrect login credentials");
+                ModelState.AddModelError(nameof(LoginVM.UserName),
+                    "Felaktiga inloggnignsuppgifter");
                 return View(viewModel);
             }
 

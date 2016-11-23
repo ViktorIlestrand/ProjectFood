@@ -11,8 +11,7 @@ namespace ProjectFood.Models.Entities
         }
 
         public int Id { get; set; }
-        public string Email { get; set; }
-        public string Name { get; set; }
+        public string AspNetId { get; set; }
 
         public virtual ICollection<KitchenStorage> KitchenStorage { get; set; }
     }

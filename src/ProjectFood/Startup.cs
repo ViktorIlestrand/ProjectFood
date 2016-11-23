@@ -19,6 +19,9 @@ namespace ProjectFood
         {
             var connString = @"Server=tcp:patodb.database.windows.net,1433;Initial Catalog=PatoDB;Persist Security Info=False;User ID=PatoDBAdmin;Password=Sommar2016!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
+            services.AddDbContext<PatoDBContext>(
+                options => options.UseSqlServer(connString));
+
             services.AddDbContext<IdentityDbContext>(
                 options => options.UseSqlServer(connString));
 

@@ -15,19 +15,5 @@ namespace ProjectFood.Models.Entities
             
         }
 
-        public async Task AddUserAsync(RegisterVM viewModel)
-        {
-            User user = new User
-            {
-                Email = viewModel.Email,
-                Name = viewModel.UserName
-
-            };
-
-            await this.SaveChangesAsync();
-            User.Add(user);
-
-        }
-
     }
 }
