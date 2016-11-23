@@ -8,10 +8,10 @@ namespace ProjectFood.Models.ViewModels.User
 {
     public class LoginVM
     {
-        [EmailAddress]
-        [DataType(DataType.EmailAddress)]
-        [Required(ErrorMessage = "Ange E-postadress")]
-        public string Email { get; set; }
+        //[EmailAddress]
+        //[DataType(DataType.EmailAddress)]
+        //[Required(ErrorMessage = "Ange E-postadress")]
+        //public string Email { get; set; }
 
         [Required(ErrorMessage = "Ange användarnamn")]
         public string UserName { get; set; }

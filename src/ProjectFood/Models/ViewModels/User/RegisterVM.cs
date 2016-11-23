@@ -18,13 +18,14 @@ namespace ProjectFood.Models.ViewModels.User
         [Required(ErrorMessage ="Ange ett användarnamn")]
         public string UserName { get; set; }
 
-        [Required(ErrorMessage = "Ange Lösenord")]
+        [Required(ErrorMessage = "Ange lösenord, måste vara minst 6 tecken och innehålla minst en stor bokstav")]
         [Display(Name = "Lösenord")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Display(Name = "Lösenord")]
+        [Display(Name = "Upprepa Lösenord")]
         [Compare("Password", ErrorMessage ="Lösenorden matchar inte")]
+        [DataType(DataType.Password)]
         public string ComparedPassword { get; set; }
     }
 }

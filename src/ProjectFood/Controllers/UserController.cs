@@ -50,9 +50,12 @@ namespace ProjectFood.Controllers
 
             if (!result.Succeeded)
             {
-          
-                ModelState.AddModelError(nameof(RegisterVM.UserName),
-                $"{viewModel.UserName} finns redan registrerat");
+                string er = "";
+                foreach (var item in result.Errors)
+                {
+                    er += item.Description.ToString();
+                }
+                ModelState.AddModelError(nameof(RegisterVM.UserName), er);
                 return View(viewModel);
             }
             await userManager.SetEmailAsync(user, viewModel.Email);
@@ -62,6 +65,11 @@ namespace ProjectFood.Controllers
             context.User.Add(entityUser);
             context.SaveChanges();          
                         
+            return RedirectToAction(nameof(MyKitchen));
+        }
+
+        public IActionResult MyKitchen()
+        {
             return View();
         }
 
@@ -77,8 +85,9 @@ namespace ProjectFood.Controllers
         public async Task<IActionResult> Login(LoginVM viewModel, string returnUrl)
         {
             if (!ModelState.IsValid)
+            {
                 return View(viewModel);
-
+            }
             #region createonce
             //// Skapa DB-schemat
             //await identityContext.Database.EnsureCreatedAsync();
@@ -94,16 +103,14 @@ namespace ProjectFood.Controllers
             if (!result.Succeeded)
             {
                 ModelState.AddModelError(nameof(LoginVM.UserName),
-                    "Felaktiga inloggnignsuppgifter");
+                    "Felaktiga inloggningsuppgifter");
                 return View(viewModel);
             }
 
             if (string.IsNullOrWhiteSpace(returnUrl))
-                return RedirectToAction(nameof(UserController.Index));
+                return RedirectToAction(nameof(MyKitchen));
             else
-                return Redirect(returnUrl);
-
- 
+                return RedirectToAction(nameof(MyKitchen));
         }
     }
 }
