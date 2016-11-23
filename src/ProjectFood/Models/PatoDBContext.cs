@@ -12,7 +12,7 @@ namespace ProjectFood.Models.Entities
         public PatoDBContext(DbContextOptions<PatoDBContext> options) : base(options)
         {
 
-            
+
         }
 
     }

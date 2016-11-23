@@ -21,9 +21,9 @@ namespace ProjectFood.Controllers
         PatoDBContext context;
         private readonly ILogger _logger;
 
-        public UserController(PatoDBContext context, 
-            IdentityDbContext identitycontext, 
-            UserManager<IdentityUser> usermanager, 
+        public UserController(PatoDBContext context,
+            IdentityDbContext identitycontext,
+            UserManager<IdentityUser> usermanager,
             SignInManager<IdentityUser> signinmanager,
             ILoggerFactory loggerFactory)
         {
@@ -69,8 +69,8 @@ namespace ProjectFood.Controllers
             var entityUser = new User();
             entityUser.AspNetId = user.Id;
             context.User.Add(entityUser);
-            context.SaveChanges();          
-                        
+            context.SaveChanges();
+
             return RedirectToAction(nameof(MyKitchen));
         }
 
