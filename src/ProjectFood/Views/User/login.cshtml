@@ -1,11 +1,15 @@
 ﻿@model ProjectFood.Models.ViewModels.User.LoginVM
 
 <body>
-    <h1 class="col-md-offset-5">Logga in</h1>
+    <br/>
     <br />
-    <div class="row">
+    <br />
+    <br />
+    <br />
+    <h1 class="col-md-offset-5">Logga in</h1>
+     <div class="row">
         <div class="col-md-8">
-            <section>
+            
             <form asp-controller="user" asp-action="login" class="form-horizontal">
                 <div asp-validation-summary="All" class="text-danger"></div>
 
@@ -34,7 +38,7 @@
                     <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Registrera ny användare?</a>
                 </p>
             </form>
-                </section>
+
         </div>
     </div>
 </body>
