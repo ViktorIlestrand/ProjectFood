@@ -154,3 +154,9 @@ CREATE TABLE [Loula].[KitchenStorage] (
     CONSTRAINT [FK_KitchenStorage_UserIngredient] FOREIGN KEY ([UserIngredientID]) REFERENCES [Loula].[UserIngredient] ([Id]),
     CONSTRAINT [FK_KitchenStorage_User] FOREIGN KEY ([UserID]) REFERENCES [Loula].[User] ([Id])
 );
+
+CREATE TABLE [Loula].[FoodType]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
+    [Name] VARCHAR(50) NOT NULL
+);
