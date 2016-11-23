@@ -86,7 +86,6 @@ namespace ProjectFood.Controllers
         {
             if (!ModelState.IsValid)
             {
-                Console.WriteLine("Modelstaten va inte valid typ.");
                 return View(viewModel);
             }
             #region createonce
@@ -105,10 +104,8 @@ namespace ProjectFood.Controllers
             {
                 ModelState.AddModelError(nameof(LoginVM.UserName),
                     "Felaktiga inloggningsuppgifter");
-                Console.WriteLine("result succedade inte!");
                 return View(viewModel);
             }
-            else Console.WriteLine("OOh det gick bra!");
 
             if (string.IsNullOrWhiteSpace(returnUrl))
                 return RedirectToAction(nameof(MyKitchen));
