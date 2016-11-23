@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectFood.Models.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,8 +10,9 @@ namespace ProjectFood.Models.ViewModels.User
                             //visa upp en lista med populära matvaror att lägga i kylsåket, och en sökruta för 
                             //matvaror med förslag. 
     {
-        public string Name { get; set; }
-        public DateTime ExpiryDate { get; set; }
+        public List<UserFoodItem> MyFood { get; set; }
+
+        public List<FoodItem> AddableFood { get; set; }
 
     }
 }

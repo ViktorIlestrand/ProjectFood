@@ -15,5 +15,12 @@ namespace ProjectFood.Models.Entities
 
         }
 
+        public async Task<List<UserFoodItem>> GetAllUserFoodItems() //här måste en session skickas in 
+            //för att kitchen ska veta vilken användares matvaror som ska visas upp.
+        {
+            
+            return null;
+        }
+
     }
 }
