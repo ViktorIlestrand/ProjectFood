@@ -25,9 +25,10 @@
     <!-- Theme CSS -->
     <link href="~/css/agency.min.css" rel="stylesheet" />
 
-
 </head>
 <body>
+
+
 
     <!-- Navigation -->
     <nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top" style="background-color:black">
@@ -37,7 +38,7 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top">Project Food</a>
+                <a class="navbar-brand page-scroll" asp-controller="home" asp-action="index">Project Food</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -60,9 +61,6 @@
                     </li>
                     <li>
                         <a asp-controller="User" asp-action="Login">Logga in</a>
-                    </li>
-                    <li>
-                        <a asp-controller="User" asp-action="Register">Registrera dig</a>
                     </li>
                 </ul>
             </div>

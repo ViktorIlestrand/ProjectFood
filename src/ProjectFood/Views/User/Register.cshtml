@@ -1,12 +1,13 @@
 ﻿@model ProjectFood.Models.ViewModels.UserVM.RegisterVM
-
+<style>
+    body {
+        padding-top: 130px;
+    }
+</style>
 <body>
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
+
     <h1 class="col-md-offset-4">Skapa ny Användare</h1>
+    <br />
     <br />
     <div class="row">
         <div class="col-md-8">
@@ -41,11 +42,16 @@
                         <span asp-validation-for="ComparedPassword" class="text-danger"></span>
                     </div>
                 </div>
+                <br />
                 <div class="form-group">
                     <div class="col-md-offset-6 col-md-10">
-                        <button type="submit" class="btn btn-default">Skapa Användare</button>
+                        <button type="submit" class="btn btn-default">Skapa användare</button>
                     </div>
                 </div>
+                <br />
+                <p class="col-md-offset-6 col-md-10">
+                    <a asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]">Har du redan ett konto? Logga in!</a>
+                </p>
             </form>
 
         </div>
