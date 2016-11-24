@@ -67,6 +67,11 @@ namespace ProjectFood.Models.Entities
             modelBuilder.Entity<KitchenStorage>(entity =>
             {
                 entity.ToTable("KitchenStorage", "Loula");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.KitchenStorage)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK_KitchenStorage_User");
             });
 
             modelBuilder.Entity<Recipe>(entity =>
@@ -104,12 +109,6 @@ namespace ProjectFood.Models.Entities
                 entity.Property(e => e.AspNetId)
                     .IsRequired()
                     .HasMaxLength(450);
-
-                entity.HasOne(d => d.KitchenStorage)
-                    .WithMany(p => p.User)
-                    .HasForeignKey(d => d.KitchenStorageId)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_User_KitchenStorage");
             });
 
             modelBuilder.Entity<UserFoodItem>(entity =>
