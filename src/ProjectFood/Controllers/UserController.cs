@@ -21,21 +21,18 @@ namespace ProjectFood.Controllers
         IdentityDbContext identityContext;
         PatoDBContext context;
         private readonly ILogger _logger;
-        HttpContext httpContext;
 
         public UserController(PatoDBContext context,
             IdentityDbContext identitycontext,
             UserManager<IdentityUser> usermanager,
             SignInManager<IdentityUser> signinmanager,
-            ILoggerFactory loggerFactory,
-            HttpContext httpcontext)
+            ILoggerFactory loggerFactory)
         {
             userManager = usermanager;
             signInManager = signinmanager;
             this.context = context;
             identityContext = identitycontext;
             _logger = loggerFactory.CreateLogger<UserController>();
-            httpContext = httpcontext;
         }
 
         public string Index()
@@ -80,7 +77,7 @@ namespace ProjectFood.Controllers
 
         public IActionResult MyKitchen()
         {
-            Console.Write(httpContext.Session.GetString("Username"));
+            Console.Write(HttpContext.Session.GetString("Username"));
             return View();
         }
 
@@ -117,7 +114,7 @@ namespace ProjectFood.Controllers
                     "Felaktiga inloggningsuppgifter");
                 return View(viewModel);
             }
-            httpContext.Session.SetString("Username", viewModel.UserName);
+            HttpContext.Session.SetString("Username", viewModel.UserName);
             
             if (string.IsNullOrWhiteSpace(returnUrl))
                 return RedirectToAction(nameof(MyKitchen));
