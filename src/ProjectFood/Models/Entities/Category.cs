@@ -7,12 +7,12 @@ namespace ProjectFood.Models.Entities
     {
         public Category()
         {
-            RecipeCategory = new HashSet<RecipeCategory>();
+            FoodItemCategory = new HashSet<FoodItemCategory>();
         }
 
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public virtual ICollection<RecipeCategory> RecipeCategory { get; set; }
+        public virtual ICollection<FoodItemCategory> FoodItemCategory { get; set; }
     }
 }

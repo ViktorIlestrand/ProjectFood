@@ -43,7 +43,9 @@ namespace ProjectFood
         {
             app.UseDeveloperExceptionPage();
             app.UseIdentity();
+            app.UseStaticFiles();
             app.UseMvcWithDefaultRoute();
+            
         }
     }
 }

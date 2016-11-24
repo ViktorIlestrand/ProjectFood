@@ -13,9 +13,11 @@ namespace ProjectFood.Models.ViewModels.User
         //[Required(ErrorMessage = "Ange E-postadress")]
         //public string Email { get; set; }
 
+        [Display(Name = "Användarnamn")]
         [Required(ErrorMessage = "Ange användarnamn")]
         public string UserName { get; set; }
 
+        [Display(Name = "Lösenord")]
         [Required(ErrorMessage = "Ange lösenord")]
         [DataType(DataType.Password)]
         public string Password { get; set; }

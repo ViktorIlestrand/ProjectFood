@@ -1,23 +1,53 @@
 ﻿@model ProjectFood.Models.ViewModels.User.RegisterVM
 
 <body>
-    <h1>Skapa ny Användare</h1>
-    <form asp-controller="user" asp-action="register">
-        <label asp-for="UserName"></label>
-        <input asp-for="UserName" />
-        <span asp-validation-for="UserName"></span>
-        <br/>
-        <label asp-for="Email"></label>
-        <input asp-for="Email" />
-        <span asp-validation-for="Email"></span>
-        <br />
-        <label asp-for="Password"></label>
-        <input asp-for="Password" />
-        <span asp-validation-for="Password"></span>
-        <br />
-        <label asp-for="ComparedPassword"></label>
-        <input asp-for="ComparedPassword" />
-        <span asp-validation-for="ComparedPassword"></span>
-        <input type="submit" value="Skapa Användare" />
-    </form>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <h1 class="col-md-offset-4">Skapa ny Användare</h1>
+    <br />
+    <div class="row">
+        <div class="col-md-8">
+
+            <form asp-controller="user" asp-action="register" class="form-horizontal">
+                <div class="form-group">
+                    <label asp-for="UserName" class="col-md-6 control-label"></label>
+                    <div class="col-md-5">
+                        <input asp-for="UserName" class="form-control" />
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email" class="col-md-6 control-label"></label>
+                    <div class="col-md-5">
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password" class="col-md-6 control-label"></label>
+                    <div class="col-md-5">
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ComparedPassword" class="col-md-6 control-label"></label>
+                    <div class="col-md-5">
+                        <input asp-for="ComparedPassword" class="form-control" />
+                        <span asp-validation-for="ComparedPassword" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-6 col-md-10">
+                        <button type="submit" class="btn btn-default">Skapa Användare</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
 </body>

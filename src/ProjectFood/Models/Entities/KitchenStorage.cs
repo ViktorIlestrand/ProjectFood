@@ -5,11 +5,15 @@ namespace ProjectFood.Models.Entities
 {
     public partial class KitchenStorage
     {
-        public int Id { get; set; }
-        public int UserIngredientId { get; set; }
-        public int UserId { get; set; }
+        public KitchenStorage()
+        {
+            User = new HashSet<User>();
+            UserFoodItem = new HashSet<UserFoodItem>();
+        }
 
-        public virtual User User { get; set; }
-        public virtual UserIngredient UserIngredient { get; set; }
+        public int Id { get; set; }
+
+        public virtual ICollection<User> User { get; set; }
+        public virtual ICollection<UserFoodItem> UserFoodItem { get; set; }
     }
 }
