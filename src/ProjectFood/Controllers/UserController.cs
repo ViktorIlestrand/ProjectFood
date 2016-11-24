@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using ProjectFood.Models.ViewModels;
-using ProjectFood.Models.ViewModels.User;
+using ProjectFood.Models.ViewModels.UserVM;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
 
@@ -36,9 +36,11 @@ namespace ProjectFood.Controllers
             _logger = loggerFactory.CreateLogger<UserController>();
         }
 
-        public string Index()
+        public IActionResult Index()
         {
-            return $"You are logged in as {HttpContext.Session.GetString("Username")}";
+            
+
+            return View();
         }
 
         [AllowAnonymous]
@@ -82,8 +84,9 @@ namespace ProjectFood.Controllers
         {
             //Här hämtar vi ut Loula.Users alla proppar och lagrar i en Userinstans som vi kallar loulaUser
             var loulaUser = await context.GetLoulaUser(User.Identity.Name);
+            var kitchenstorage = new MyKitchenVM(context.GetUserFoodItems(loulaUser.Id));
 
-            return View();
+            return View(kitchenstorage);
         }
 
         [AllowAnonymous]

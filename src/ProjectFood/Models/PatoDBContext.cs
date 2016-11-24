@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using ProjectFood.Models.ViewModels.User;
+using ProjectFood.Models.ViewModels.UserVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +36,20 @@ namespace ProjectFood.Models.Entities
                 );
 
             return loulaUser;
+        }
+
+        public List<FoodItem> GetUserFoodItems(int userId)
+        {
+            var kitchenStorage = KitchenStorage.SingleOrDefault(
+                k => k.UserId == userId);
+
+            var userFood = UserFoodItem.Where(
+                f => f.KitchenStorageId == kitchenStorage.Id)
+                .Select(f => f.FoodItem
+                );
+
+            var foodList = userFood.ToList();
+            return foodList;
         }
 
 
