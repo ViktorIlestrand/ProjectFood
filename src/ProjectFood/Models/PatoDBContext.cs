@@ -18,12 +18,6 @@ namespace ProjectFood.Models.Entities
 
         }
 
-        public async Task<List<UserFoodItem>> GetAllUserFoodItems() //här måste en session skickas in 
-            //för att kitchen ska veta vilken användares matvaror som ska visas upp.
-        {
-            
-            return null;
-        }
 
         //Inparametern kommer in med hjälp av den icke-persistenta cookien (User.Identity.Name)
         public async Task<User> GetLoulaUser(string username)
@@ -38,20 +32,22 @@ namespace ProjectFood.Models.Entities
             return loulaUser;
         }
 
-        public List<FoodItem> GetUserFoodItems(int userId)
+        public List<UserFoodItem> GetUserFoodItems(User user)
         {
-            var kitchenStorage = KitchenStorage.SingleOrDefault(
-                k => k.UserId == userId);
-
-            var userFood = UserFoodItem.Where(
-                f => f.KitchenStorageId == kitchenStorage.Id)
-                .Select(f => f.FoodItem
-                );
-
-            var foodList = userFood.ToList();
-            return foodList;
+            return user.KitchenStorage.FirstOrDefault().UserFoodItem.ToList();
         }
 
+        public void AddFoodToKitchen(User user, FoodItem food, DateTime expiryDate)
+        {
+            var userFoodItem = new UserFoodItem();
+            userFoodItem.Expires = expiryDate;
+            userFoodItem.FoodItem = food;
 
+            user.KitchenStorage.FirstOrDefault().UserFoodItem.Add(userFoodItem);
+        }
+        public void RemoveFoodFromKitchen(User user, UserFoodItem food)
+        {
+          user.KitchenStorage.FirstOrDefault().UserFoodItem.Remove(food);
+        }
     }
 }
