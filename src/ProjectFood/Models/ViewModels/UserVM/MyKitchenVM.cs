@@ -16,10 +16,10 @@ namespace ProjectFood.Models.ViewModels.UserVM
         public List<FoodItem> AddableFood { get; set; }
 
 
-        public MyKitchenVM(List<UserFoodItem> userFoodList)
+        public MyKitchenVM(List<UserFoodItem> userFoodList, List<FoodItem> foodList)
         {
             MyFood = userFoodList;
-            //AddableFood = GetPopularFood(10);
+            AddableFood = foodList;
         }
     }
 }
