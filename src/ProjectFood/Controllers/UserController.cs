@@ -89,7 +89,7 @@ namespace ProjectFood.Controllers
         {
             //Här hämtar vi ut Loula.Users alla proppar och lagrar i en Userinstans som vi kallar loulaUser
             var loulaUser = await context.GetLoulaUser(User.Identity.Name);
-            var myKitchenVM = new MyKitchenVM(context.GetUserFoodItems(loulaUser));
+            var myKitchenVM = new MyKitchenVM(context.GetUserFoodItems(loulaUser), context.GetPopularFoodItems(10));
 
             return View(myKitchenVM);
         }

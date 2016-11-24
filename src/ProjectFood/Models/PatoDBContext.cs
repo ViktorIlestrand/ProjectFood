@@ -56,12 +56,10 @@ namespace ProjectFood.Models.Entities
 
             Random rand = new Random();
 
-
             for (int i = 0; i < number; i++)
             {
                 var foodItems = FoodItem.ToList();
                 var item = foodItems.ElementAt(rand.Next(2, 77));
-
                 list.Add(item);
             }
 
