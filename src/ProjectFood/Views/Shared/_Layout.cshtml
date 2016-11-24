@@ -47,16 +47,19 @@
                         <a href="#page-top"></a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="">Recept</a>
+                        <a asp-controller="Home" asp-action="Recipes">Recept</a>
+
                     </li>
                     <li>
-                        <a class="page-scroll" href="">Om Oss</a>
+                        <a asp-controller="Home" asp-action="About">Om oss</a>
+
                     </li>
                     <li>
-                        <a class="page-scroll" href="">Mitt Kök</a> @*ska ta in till inlogg om man inte är inloggad*@
+                        <a asp-controller="User" asp-action="MyKitchen">Mitt Kök</a>
+
                     </li>
                     <li>
-                        <a class="page-scroll" href="">Logga in</a> @*ska vara partiell vy som ändras till username när man är inloggad*@
+                        <a asp-controller="User" asp-action="Login">Logga in</a>
                     </li>
                 </ul>
             </div>
