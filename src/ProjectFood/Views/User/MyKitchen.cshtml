@@ -1,8 +1,7 @@
 ﻿@model ProjectFood.Models.ViewModels.UserVM.MyKitchenVM
 
-<img src="http://fridges.se/bilder/rostfria-kylskap-med-ismaskin.jpg" />
 @{foreach (var item in Model.MyFood)
     {
-        @item.Name
+        @item.Name <br />
     }
 }

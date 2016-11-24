@@ -77,6 +77,11 @@ namespace ProjectFood.Controllers
             context.User.Add(entityUser);
             context.SaveChanges();
 
+            var kitchenStorage = new KitchenStorage();
+            kitchenStorage.UserId = entityUser.Id;
+            context.KitchenStorage.Add(kitchenStorage);
+            context.SaveChanges();            
+
             return RedirectToAction(nameof(MyKitchen));
         }
 

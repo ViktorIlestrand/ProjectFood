@@ -71,6 +71,7 @@ namespace ProjectFood.Models.Entities
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.KitchenStorage)
                     .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_KitchenStorage_User");
             });
 
