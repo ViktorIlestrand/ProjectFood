@@ -49,5 +49,23 @@ namespace ProjectFood.Models.Entities
         {
           user.KitchenStorage.FirstOrDefault().UserFoodItem.Remove(food);
         }
+
+        public List<FoodItem> GetPopularFoodItems(int number)
+        {
+            var list = new List<FoodItem>();
+
+            Random rand = new Random();
+
+
+            for (int i = 0; i < number; i++)
+            {
+                var foodItems = FoodItem.ToList();
+                var item = foodItems.ElementAt(rand.Next(2, 77));
+
+                list.Add(item);
+            }
+
+            return list;
+        }
     }
 }
