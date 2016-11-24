@@ -36,11 +36,14 @@ namespace ProjectFood
                 .AddDefaultTokenProviders();
 
             services.AddMvc();
+            services.AddSession();
+            services.AddMemoryCache();
 
         }
 
         public void Configure(IApplicationBuilder app)
         {
+            app.UseSession();
             app.UseDeveloperExceptionPage();
             app.UseIdentity();
             app.UseStaticFiles();
