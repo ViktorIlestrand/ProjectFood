@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace ProjectFood.Controllers
 {
+    [Authorize]
     public class UserController : Controller
     {
         UserManager<IdentityUser> userManager;
@@ -37,15 +38,17 @@ namespace ProjectFood.Controllers
 
         public string Index()
         {
-            return $"You are logged in as {User.Identity.Name}";
+            return $"You are logged in as {HttpContext.Session.GetString("Username")}";
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Register(RegisterVM viewModel)
         {
@@ -75,9 +78,11 @@ namespace ProjectFood.Controllers
             return RedirectToAction(nameof(MyKitchen));
         }
 
-        public IActionResult MyKitchen()
+        public async Task<IActionResult> MyKitchen()
         {
-            Console.Write(HttpContext.Session.GetString("Username"));
+            //Här hämtar vi ut Loula.Users alla proppar och lagrar i en Userinstans som vi kallar loulaUser
+            var loulaUser = await context.GetLoulaUser(User.Identity.Name);
+
             return View();
         }
 
@@ -105,6 +110,7 @@ namespace ProjectFood.Controllers
             //var result = await userManager.CreateAsync(user, "Sommar2016!");
             #endregion
 
+            //Detta skapar upp en icke-persistent cookie som lagrar username
             var result = await signInManager.PasswordSignInAsync(
                 viewModel.UserName, viewModel.Password, false, false);
 
@@ -114,8 +120,7 @@ namespace ProjectFood.Controllers
                     "Felaktiga inloggningsuppgifter");
                 return View(viewModel);
             }
-            HttpContext.Session.SetString("Username", viewModel.UserName);
-            
+
             if (string.IsNullOrWhiteSpace(returnUrl))
                 return RedirectToAction(nameof(MyKitchen));
             else

@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ProjectFood.Models.ViewModels.User;
 using System;
 using System.Collections.Generic;
@@ -9,9 +11,10 @@ namespace ProjectFood.Models.Entities
 {
     public partial class PatoDBContext : DbContext
     {
-        public PatoDBContext(DbContextOptions<PatoDBContext> options) : base(options)
+        UserManager<IdentityUser> userManager;
+        public PatoDBContext(DbContextOptions<PatoDBContext> options, UserManager<IdentityUser> userManager) : base(options)
         {
-
+            this.userManager = userManager;
 
         }
 
@@ -21,6 +24,20 @@ namespace ProjectFood.Models.Entities
             
             return null;
         }
+
+        //Inparametern kommer in med hjälp av den icke-persistenta cookien (User.Identity.Name)
+        public async Task<User> GetLoulaUser(string username)
+        {
+            //UserManagern kan med hjälp av användarnamnet hämta ut en IdentityUser från databasen enl nedan
+            var identityUser = await userManager.FindByNameAsync(username);
+            //Här hämtar vi ut Loula.User.Id med hjälp av vår IdentityUser 
+            var loulaUser = this.User.SingleOrDefault(
+                o => o.AspNetId == identityUser.Id
+                );
+
+            return loulaUser;
+        }
+
 
     }
 }
