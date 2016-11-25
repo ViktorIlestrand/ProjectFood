@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
+    <title>@ViewData["Title"]</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -47,19 +47,19 @@
                     <li class="hidden">
                         <a href="#page-top"></a>
                     </li>
-                    <li>
+                    <li class="@(ViewData["Title"].ToString() == "Recipes" ? "active" : "")">
                         <a asp-controller="Home" asp-action="Recipes">Recept</a>
 
                     </li>
-                    <li>
+                    <li class="@(ViewData["Title"].ToString() == "About" ? "active" : "")">
                         <a asp-controller="Home" asp-action="About">Om oss</a>
 
                     </li>
-                    <li>
+                    <li class="@(ViewData["Title"].ToString() == "MyKItchen" ? "active" : "")">
                         <a asp-controller="User" asp-action="MyKitchen">Mitt Kök</a>
 
                     </li>
-                    <li>
+                    <li class="@(ViewData["Title"].ToString() == "Login" ? "active" : "")">
                         <a asp-controller="User" asp-action="Login">Logga in</a>
                     </li>
                 </ul>
