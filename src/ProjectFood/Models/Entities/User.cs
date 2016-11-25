@@ -7,12 +7,12 @@ namespace ProjectFood.Models.Entities
     {
         public User()
         {
-            KitchenStorage = new HashSet<KitchenStorage>();
+            UserFoodItem = new HashSet<UserFoodItem>();
         }
 
         public int Id { get; set; }
         public string AspNetId { get; set; }
 
-        public virtual ICollection<KitchenStorage> KitchenStorage { get; set; }
+        public virtual ICollection<UserFoodItem> UserFoodItem { get; set; }
     }
 }

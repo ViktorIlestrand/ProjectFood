@@ -76,12 +76,7 @@ namespace ProjectFood.Controllers
             entityUser.AspNetId = user.Id;
             context.User.Add(entityUser);
             context.SaveChanges();
-
-            var kitchenStorage = new KitchenStorage();
-            kitchenStorage.UserId = entityUser.Id;
-            context.KitchenStorage.Add(kitchenStorage);
-            context.SaveChanges();            
-
+                            
             return RedirectToAction(nameof(MyKitchen));
         }
 
@@ -89,7 +84,7 @@ namespace ProjectFood.Controllers
         {
             //Här hämtar vi ut Loula.Users alla proppar och lagrar i en Userinstans som vi kallar loulaUser
             var loulaUser = await context.GetLoulaUser(User.Identity.Name);
-            var myKitchenVM = new MyKitchenVM(context.GetUserFoodItems(loulaUser), context.GetPopularFoodItems(10));
+            var myKitchenVM = new MyKitchenVM(loulaUser.UserFoodItem.ToList(), context.GetPopularFoodItems(10));
 
             return View(myKitchenVM);
         }

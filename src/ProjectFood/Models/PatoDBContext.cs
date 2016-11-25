@@ -25,29 +25,40 @@ namespace ProjectFood.Models.Entities
             //UserManagern kan med hjälp av användarnamnet hämta ut en IdentityUser från databasen enl nedan
             var identityUser = await userManager.FindByNameAsync(username);
             //Här hämtar vi ut Loula.User.Id med hjälp av vår IdentityUser 
-            var loulaUser = this.User.SingleOrDefault(
+            var loulaUser = this.User
+                .Include(o => o.UserFoodItem)
+                .SingleOrDefault(
                 o => o.AspNetId == identityUser.Id
                 );
 
             return loulaUser;
         }
 
-        public List<UserFoodItem> GetUserFoodItems(User user)
-        {
-            return user.KitchenStorage.FirstOrDefault().UserFoodItem.ToList();
-        }
+        //public List<UserFoodItem> GetUserFoodItems(User user)
+        //{
+        //    return user.UserFoodItem.ToList();
+        //}
 
         public void AddFoodToKitchen(User user, FoodItem food, DateTime expiryDate)
         {
-            var userFoodItem = new UserFoodItem();
-            userFoodItem.Expires = expiryDate;
-            userFoodItem.FoodItem = food;
+            try
+            {
+                var userFoodItem = new UserFoodItem();
+                userFoodItem.Expires = expiryDate;
+                userFoodItem.FoodItem = food;
 
-            user.KitchenStorage.FirstOrDefault().UserFoodItem.Add(userFoodItem);
+                user.UserFoodItem.Add(userFoodItem);
+            }
+            catch (Exception ex)
+            {
+                string errorMsg = ex.ToString();
+                System.IO.File.WriteAllText(@"C:\Users\Administrator\Documents\Visual Studio 2015\Projects\ProjectFood\src\ProjectFood\ErrorLog.txt", errorMsg);
+            }
+            
         }
         public void RemoveFoodFromKitchen(User user, UserFoodItem food)
         {
-          user.KitchenStorage.FirstOrDefault().UserFoodItem.Remove(food);
+            user.UserFoodItem.Remove(food);
         }
 
         public List<FoodItem> GetPopularFoodItems(int number)
@@ -59,7 +70,7 @@ namespace ProjectFood.Models.Entities
             for (int i = 0; i < number; i++)
             {
                 var foodItems = FoodItem.ToList();
-                var item = foodItems.ElementAt(rand.Next(2, 77));
+                var item = foodItems.ElementAt(rand.Next(2, 75));
                 list.Add(item);
             }
 
