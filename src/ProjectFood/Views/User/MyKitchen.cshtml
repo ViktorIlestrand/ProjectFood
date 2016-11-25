@@ -10,28 +10,22 @@
 </style>
 
 
-<input type='text' id='newFood' />
 
-<input type='button' value='Lägg till matvara' id='addFood' />
-
-<ul id='myKitchenList'></ul>
-<br/>
-<ul>
-    @{foreach (var item in Model.MyFood)
-        {
-            <li>@item.FoodItem.Name</li>
-        }
-    }    
-</ul>
 
 <div class="ui-widget">
-    <label for="birds">Birds: </label>
-    <input id="birds">
+    <label for="myFood">Sök Matvara: </label>
+    <input id="myFood">
 </div>
 
 <div class="ui-widget" style="margin-top:2em; font-family:Arial">
-    Result:
-    <div id="log" style="height: 200px; width: 300px; overflow: auto;" class="ui-widget-content"></div>
+    MAT
+    <div id="log" style="height: 200px; width: 300px; overflow: auto;" class="ui-widget-content">
+        @{foreach (var item in Model.MyFood)
+            {
+                @item.FoodItem.Name <br/>
+            }
+        } 
+    </div>
 </div>
 
 @*@{ foreach (var item in Model.AddableFood)

@@ -147,10 +147,18 @@ namespace ProjectFood.Controllers
         public string FoodQuery([FromQuery]string query)
         {
             var list = context.GetAllFoodItems(query);
-
             
-
             return JsonConvert.SerializeObject(list);
+        }
+
+        [HttpGet]
+        public string MyFood()
+        {
+            var loulaUser = context.GetLoulaUser(User.Identity.Name);
+
+            var userFood = loulaUser.Result.UserFoodItem;
+            
+            return JsonConvert.SerializeObject(userFood);
         }
 
     }
