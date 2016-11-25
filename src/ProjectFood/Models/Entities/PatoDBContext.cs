@@ -90,6 +90,12 @@ namespace ProjectFood.Models.Entities
                     .HasForeignKey(d => d.FoodItemId)
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_RecipeFoodItem_FoodItem");
+
+                entity.HasOne(d => d.Recipe)
+                    .WithMany(p => p.RecipeFoodItem)
+                    .HasForeignKey(d => d.RecipeId)
+                    .OnDelete(DeleteBehavior.Restrict)
+                    .HasConstraintName("FK_RecipeFoodItem_Recipe");
             });
 
             modelBuilder.Entity<User>(entity =>
