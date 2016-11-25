@@ -1,5 +1,9 @@
 ﻿@model ProjectFood.Models.ViewModels.UserVM.MyKitchenVM
 
+@{
+    ViewData["Title"] = "MyKitchen";
+}
+
 @{foreach (var item in Model.MyFood)
     {
         @item.Name <br />
