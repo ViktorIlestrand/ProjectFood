@@ -11,6 +11,7 @@ using ProjectFood.Models.ViewModels;
 using ProjectFood.Models.ViewModels.UserVM;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace ProjectFood.Controllers
 {
@@ -139,5 +140,18 @@ namespace ProjectFood.Controllers
             _logger.LogInformation(4, "User logged out.");
             return RedirectToAction(nameof(UserController.Index), "Home");
         }
+
+
+
+        [HttpGet]
+        public string FoodQuery([FromQuery]string query)
+        {
+            var list = context.GetAllFoodItems(query);
+
+            
+
+            return JsonConvert.SerializeObject(list);
+        }
+
     }
 }

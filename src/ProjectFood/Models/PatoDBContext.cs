@@ -76,5 +76,15 @@ namespace ProjectFood.Models.Entities
 
             return list;
         }
+
+        public List<string> GetAllFoodItems(string query)
+        {
+            var list = this.FoodItem
+                .Select(p => p.Name)
+                .Where(p => p.Contains(query))
+                .ToList();
+
+            return list;
+        }
     }
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using ProjectFood.Models.Entities;
+using Newtonsoft.Json;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -11,6 +13,12 @@ namespace ProjectFood.Controllers
     [Route("api/[controller]")]
     public class FoodController : Controller
     {
+        PatoDBContext context;
+
+        public FoodController(PatoDBContext context)
+        {
+            this.context = context;
+        }
         // GET: api/values
         [HttpGet]
         public IEnumerable<string> Get()
@@ -20,15 +28,18 @@ namespace ProjectFood.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public string Get(string query)
         {
-            return "value";
+            var list = context.GetAllFoodItems(query);
+
+            return JsonConvert.SerializeObject(list);
         }
 
         // POST api/values
         [HttpPost]
         public void Post([FromBody]string value)
         {
+            
         }
 
         // PUT api/values/5
