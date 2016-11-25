@@ -24,7 +24,11 @@
 
     <!-- Theme CSS -->
     <link href="~/css/agency.min.css" rel="stylesheet" />
-
+    <style>
+        body {
+            background-color: ghostwhite;
+        }
+    </style>
 </head>
 <body>
 
@@ -55,7 +59,7 @@
                         <a asp-controller="Home" asp-action="About">Om oss</a>
 
                     </li>
-                    <li class="@(ViewData["Title"].ToString() == "MyKItchen" ? "active" : "")">
+                    <li class="@(ViewData["Title"].ToString() == "MyKitchen" ? "active" : "")">
                         <a asp-controller="User" asp-action="MyKitchen">Mitt Kök</a>
 
                     </li>
