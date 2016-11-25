@@ -3,15 +3,29 @@
 @{
     ViewData["Title"] = "MyKitchen";
 }
-
-@{foreach (var item in Model.MyFood)
-    {
-        @item.FoodItem.Name <br />
+<style>
+    body {
+        padding-top: 130px;
     }
-}
+</style>
 
-@{ foreach (var item in Model.AddableFood)
+
+<input type='text' id='newFood' />
+
+<input type='button' value='Lägg till matvara' id='addFood' />
+
+<ul id='myKitchenList'></ul>
+<br/>
+<ul>
+    @{foreach (var item in Model.MyFood)
+        {
+            <li>@item.FoodItem.Name</li>
+        }
+    }    
+</ul>
+
+@*@{ foreach (var item in Model.AddableFood)
     {
         @item.Name <br />
     }
-}
+}*@
