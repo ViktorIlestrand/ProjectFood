@@ -76,9 +76,7 @@ namespace ProjectFood.Controllers
             entityUser.AspNetId = user.Id;
             context.User.Add(entityUser);
             context.SaveChanges();
-
-                   
-
+                            
             return RedirectToAction(nameof(MyKitchen));
         }
 

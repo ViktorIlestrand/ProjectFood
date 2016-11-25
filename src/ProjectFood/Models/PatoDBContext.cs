@@ -41,11 +41,20 @@ namespace ProjectFood.Models.Entities
 
         public void AddFoodToKitchen(User user, FoodItem food, DateTime expiryDate)
         {
-            var userFoodItem = new UserFoodItem();
-            userFoodItem.Expires = expiryDate;
-            userFoodItem.FoodItem = food;
+            try
+            {
+                var userFoodItem = new UserFoodItem();
+                userFoodItem.Expires = expiryDate;
+                userFoodItem.FoodItem = food;
 
-            user.UserFoodItem.Add(userFoodItem);
+                user.UserFoodItem.Add(userFoodItem);
+            }
+            catch (Exception ex)
+            {
+                string errorMsg = ex.ToString();
+                System.IO.File.WriteAllText(@"C:\Users\Administrator\Documents\Visual Studio 2015\Projects\ProjectFood\src\ProjectFood\ErrorLog.txt", errorMsg);
+            }
+            
         }
         public void RemoveFoodFromKitchen(User user, UserFoodItem food)
         {
