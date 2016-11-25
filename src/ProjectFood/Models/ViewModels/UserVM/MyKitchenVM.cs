@@ -11,15 +11,15 @@ namespace ProjectFood.Models.ViewModels.UserVM
                             //matvaror med förslag. 
 
     {
-        public List<FoodItem> MyFood { get; set; }
+        public List<UserFoodItem> MyFood { get; set; }
 
         public List<FoodItem> AddableFood { get; set; }
 
 
-        public MyKitchenVM(List<FoodItem> userFoodList)
+        public MyKitchenVM(List<UserFoodItem> userFoodList, List<FoodItem> foodList)
         {
             MyFood = userFoodList;
-            //AddableFood = GetPopularFood(10);
+            AddableFood = foodList;
         }
     }
 }

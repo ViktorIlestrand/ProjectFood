@@ -18,12 +18,6 @@ namespace ProjectFood.Models.Entities
 
         }
 
-        public async Task<List<UserFoodItem>> GetAllUserFoodItems() //här måste en session skickas in 
-            //för att kitchen ska veta vilken användares matvaror som ska visas upp.
-        {
-            
-            return null;
-        }
 
         //Inparametern kommer in med hjälp av den icke-persistenta cookien (User.Identity.Name)
         public async Task<User> GetLoulaUser(string username)
@@ -31,27 +25,47 @@ namespace ProjectFood.Models.Entities
             //UserManagern kan med hjälp av användarnamnet hämta ut en IdentityUser från databasen enl nedan
             var identityUser = await userManager.FindByNameAsync(username);
             //Här hämtar vi ut Loula.User.Id med hjälp av vår IdentityUser 
-            var loulaUser = this.User.SingleOrDefault(
+            var loulaUser = this.User
+                .Include(o => o.UserFoodItem)
+                .SingleOrDefault(
                 o => o.AspNetId == identityUser.Id
                 );
 
             return loulaUser;
         }
 
-        public List<FoodItem> GetUserFoodItems(int userId)
+        //public List<UserFoodItem> GetUserFoodItems(User user)
+        //{
+        //    return user.UserFoodItem.ToList();
+        //}
+
+        public void AddFoodToKitchen(User user, FoodItem food, DateTime expiryDate)
         {
-            var kitchenStorage = KitchenStorage.SingleOrDefault(
-                k => k.UserId == userId);
+            var userFoodItem = new UserFoodItem();
+            userFoodItem.Expires = expiryDate;
+            userFoodItem.FoodItem = food;
 
-            var userFood = UserFoodItem.Where(
-                f => f.KitchenStorageId == kitchenStorage.Id)
-                .Select(f => f.FoodItem
-                );
-
-            var foodList = userFood.ToList();
-            return foodList;
+            user.UserFoodItem.Add(userFoodItem);
+        }
+        public void RemoveFoodFromKitchen(User user, UserFoodItem food)
+        {
+            user.UserFoodItem.Remove(food);
         }
 
+        public List<FoodItem> GetPopularFoodItems(int number)
+        {
+            var list = new List<FoodItem>();
 
+            Random rand = new Random();
+
+            for (int i = 0; i < number; i++)
+            {
+                var foodItems = FoodItem.ToList();
+                var item = foodItems.ElementAt(rand.Next(2, 75));
+                list.Add(item);
+            }
+
+            return list;
+        }
     }
 }

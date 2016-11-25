@@ -64,17 +64,6 @@ namespace ProjectFood.Models.Entities
                     .HasColumnType("varchar(50)");
             });
 
-            modelBuilder.Entity<KitchenStorage>(entity =>
-            {
-                entity.ToTable("KitchenStorage", "Loula");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.KitchenStorage)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_KitchenStorage_User");
-            });
-
             modelBuilder.Entity<Recipe>(entity =>
             {
                 entity.ToTable("Recipe", "Loula");
@@ -124,11 +113,11 @@ namespace ProjectFood.Models.Entities
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_UserFoodItem_FoodItem");
 
-                entity.HasOne(d => d.KitchenStorage)
+                entity.HasOne(d => d.User)
                     .WithMany(p => p.UserFoodItem)
-                    .HasForeignKey(d => d.KitchenStorageId)
+                    .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_UserFoodItem_KitchenStorage");
+                    .HasConstraintName("FK_UserFoodItem_User");
             });
         }
 
@@ -136,7 +125,6 @@ namespace ProjectFood.Models.Entities
         public virtual DbSet<FoodItem> FoodItem { get; set; }
         public virtual DbSet<FoodItemCategory> FoodItemCategory { get; set; }
         public virtual DbSet<FoodType> FoodType { get; set; }
-        public virtual DbSet<KitchenStorage> KitchenStorage { get; set; }
         public virtual DbSet<Recipe> Recipe { get; set; }
         public virtual DbSet<RecipeFoodItem> RecipeFoodItem { get; set; }
         public virtual DbSet<User> User { get; set; }
