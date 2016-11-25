@@ -1,14 +1,7 @@
 ﻿@model ProjectFood.Models.ViewModels.UserVM.MyKitchenVM
 
-<ul>
-    @{foreach (var userFoodItem in Model.MyFood)
-        {
-            <li>
-                @userFoodItem.FoodItem.Name
-                <br />
-                @userFoodItem.Expires
-                <br />
-            </li>
-        }
+@{foreach (var item in Model.MyFood)
+    {
+        @item.Name <br />
     }
-</ul>
+}
