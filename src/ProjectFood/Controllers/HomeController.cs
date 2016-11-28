@@ -16,11 +16,6 @@ namespace ProjectFood.Controllers
             return View();
         }
 
-        public IActionResult Recipes()
-        {
-            return View();
-        }
-
         public IActionResult About()
         {
             return View();

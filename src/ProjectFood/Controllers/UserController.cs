@@ -172,13 +172,20 @@ namespace ProjectFood.Controllers
             return JsonConvert.SerializeObject(userFood);
         }
 
-        [HttpPost]
-        public async Task<string> SaveExpireDate([FromForm]string foodName, [FromForm] string date)
+        public async Task<IActionResult> Recipes()
         {
-            var loulaUser =await context.GetLoulaUser(User.Identity.Name);
+            var loulaUser = await context.GetLoulaUser(this.User.Identity.Name);
 
+            return View(context.GetMatchingRecipes(loulaUser));
+        }
+
+        public string SaveExpireDate([FromForm]string foodName, [FromForm] string date)
+        {
+            var loulaUser = context.GetLoulaUser(User.Identity.Name);
+
+            var userFood = loulaUser.Result.UserFoodItem;
             //plocka fram userfooditem utifrån foodname och user
-            context.changeDate(loulaUser, foodName, date);
+            context.doStuff(foodName, date);
 
             return JsonConvert.SerializeObject("ok");
         }
