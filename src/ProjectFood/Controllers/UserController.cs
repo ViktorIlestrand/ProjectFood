@@ -85,6 +85,7 @@ namespace ProjectFood.Controllers
         {
             //Här hämtar vi ut Loula.Users alla proppar och lagrar i en Userinstans som vi kallar loulaUser
             var loulaUser = await context.GetLoulaUser(User.Identity.Name);
+            var id = loulaUser.Id;
             var myKitchenVM = new MyKitchenVM(loulaUser.UserFoodItem.ToList(), context.GetPopularFoodItems(10));
 
             return View(myKitchenVM);
@@ -147,8 +148,18 @@ namespace ProjectFood.Controllers
         public string FoodQuery([FromQuery]string query)
         {
             var list = context.GetAllFoodItems(query);
-            
+
             return JsonConvert.SerializeObject(list);
+        }
+
+        [HttpPost]
+        public async Task<string> SaveFood([FromForm]string food)
+        {
+            var loulaUser = await context.GetLoulaUser(User.Identity.Name);
+            
+            context.SaveFoodItem(food, loulaUser.Id);
+
+            return JsonConvert.SerializeObject("ok");
         }
 
         [HttpGet]

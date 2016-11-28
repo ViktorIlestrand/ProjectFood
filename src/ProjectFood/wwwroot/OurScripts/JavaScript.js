@@ -33,6 +33,18 @@ $(function () {
         minLength: 1,
         select: function (event, ui) {
             log(ui.item.value);
+            console.log(ui.item.value);
+            $.post({
+                url: "/User/SaveFood",
+                dataType: "json",
+                data: {
+                    food: ui.item.value
+                },
+                success: function (data) {
+                    console.log(data)
+                }
+            });
+
         }
     });
 });
