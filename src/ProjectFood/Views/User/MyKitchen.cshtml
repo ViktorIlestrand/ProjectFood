@@ -15,23 +15,41 @@
 <div class="ui-widget">
     <label for="myFood">Sök Matvara: </label>
     <input id="myFood">
+
 </div>
+
 
 <div class="ui-widget" style="margin-top:2em; font-family:Arial">
     MAT
-    <div id="log" style="height: 200px; width: 150px; overflow: auto;" class="ui-widget-content">
+    <table id="log" style="height: 200px; width: 300px;" class="ui-widget-content">
+        @{int index = 0; }
         @{foreach (var item in Model.MyFood)
             {
-                @item.FoodItem.Name <br/>
+                <tr id="@index">
+                    <td id="1" onclick="doStuff(@item.FoodItem.Name, @index)">@item.FoodItem.Name</td>
+                    <td id="@index" onclick="changeDate(@index)">@item.Expires</td>
+                    <td onclick="removeItem(@index)">Ta bort</td>
+                </tr>
+                index++;
             }
-        } 
-    </div>
+        }
+    </table>
+
+    <input type="text" id="datepicker">
+    <p id="selectedDateIndex"></p>
 </div>
 
-
+@*<div>
+        <ul>
+            @foreach (var item in Model.MyFood)
+            {
+                <li> GURGEL</li>
+            }
+        </ul>
+    </div>*@
 
 @*@{ foreach (var item in Model.AddableFood)
-    {
-        @item.Name <br />
-    }
-}*@
+        {
+            @item.Name <br />
+        }
+    }*@
