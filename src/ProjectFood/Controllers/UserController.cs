@@ -172,5 +172,16 @@ namespace ProjectFood.Controllers
             return JsonConvert.SerializeObject(userFood);
         }
 
+        public string SaveExpireDate([FromForm]string foodName, [FromForm] string date)
+        {
+            var loulaUser = context.GetLoulaUser(User.Identity.Name);
+
+            var userFood = loulaUser.Result.UserFoodItem;
+            //plocka fram userfooditem utifrån foodname och user
+            context.doStuff(foodName, date);
+
+            return JsonConvert.SerializeObject("ok");
+        }
+
     }
 }

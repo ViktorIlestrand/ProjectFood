@@ -114,5 +114,10 @@ namespace ProjectFood.Models.Entities
             }
             return message;
         }
+
+        public void doStuff(string foodName, string date)
+        {
+
+        }
     }
 }
