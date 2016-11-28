@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using ProjectFood.Models.ViewModels.RecipeVM;
 using ProjectFood.Models.ViewModels.UserVM;
 using System;
 using System.Collections.Generic;
@@ -113,6 +114,90 @@ namespace ProjectFood.Models.Entities
                 message = "Added";
             }
             return message;
+        }
+
+        public List<RecipeVM> GetMatchingRecipes(User user)
+        {
+            var recipevmsToReturn = new List<RecipeVM>();
+            var recipes = GetAllRecipes(); 
+            var useritems = new List<FoodItem>();
+
+            foreach (var item in user.UserFoodItem)
+            {
+                useritems.Add(item.FoodItem);
+            }
+            
+            foreach (var recipe in recipes)
+            {
+                var recipeingredients = GetFoodItemForRecipe(recipe);
+                var listOfFoodMatches = new List<FoodMatching>();
+
+                foreach (var ingredient in recipeingredients)
+                {
+                    bool match = false;
+
+                    foreach (var useritem in useritems)
+                    {
+                        if(ingredient.FoodItem == useritem)
+                        {
+                            match = true;
+                            break;
+                        }
+                    }
+
+                    var foodmatch = new FoodMatching(match, ingredient.FoodItem.Name, recipe.Id);
+                    listOfFoodMatches.Add(foodmatch);
+                }
+
+                double matchpercentage = GetMatchPercentage(listOfFoodMatches);
+                var recipevm = new RecipeVM(recipe.Title, recipe.Portions, recipeingredients, listOfFoodMatches, matchpercentage, recipe.Instructions, recipe.ImageUrl, recipe.CookingTime);
+
+                recipevmsToReturn.Add(recipevm);
+            }
+            return recipevmsToReturn;
+        }
+
+
+        public double GetMatchPercentage(List<FoodMatching> list)
+        {
+            int truesey = 0;
+            int falsey = 0;
+
+            foreach (var item in list)
+            {
+                if (item.UserHasItem)
+                {
+                    truesey++;
+                }else
+                {
+                    falsey++;
+                }
+            }
+            if (list.Count == 0)
+                return 0;
+            else
+                return truesey / (truesey + falsey);
+
+        }
+
+        public List<Recipe> GetAllRecipes()
+        {
+             var result = Recipe
+                .Include(o => o.RecipeFoodItem)
+                .ToList();            
+
+
+            return result;
+        }
+
+        private List<RecipeFoodItem> GetFoodItemForRecipe(Recipe recipe)
+        {
+            var result = RecipeFoodItem
+                .Include(p => p.FoodItem)
+                .Where(p => recipe.Id == p.RecipeId)
+                .ToList();
+
+            return result;
         }
     }
 }

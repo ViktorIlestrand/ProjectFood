@@ -74,7 +74,7 @@ namespace ProjectFood.Models.Entities
 
                 entity.Property(e => e.Instructions)
                     .IsRequired()
-                    .HasColumnType("varchar(50)");
+                    .HasColumnType("varchar(2000)");
 
                 entity.Property(e => e.Title)
                     .IsRequired()

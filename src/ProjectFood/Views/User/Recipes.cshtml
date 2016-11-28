@@ -1,0 +1,19 @@
+﻿@model List<ProjectFood.Models.ViewModels.RecipeVM.RecipeVM>
+
+@{
+    ViewData["Title"] = "Recipes";
+}
+
+<style>
+    body {
+        padding-top: 130px;
+    }
+</style>
+<div>
+    @{foreach (var item in Model)
+        {
+            @item.MatchPercentage
+        }
+     }
+
+</div>

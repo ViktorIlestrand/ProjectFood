@@ -172,5 +172,12 @@ namespace ProjectFood.Controllers
             return JsonConvert.SerializeObject(userFood);
         }
 
+        public async Task<IActionResult> Recipes()
+        {
+            var loulaUser = await context.GetLoulaUser(this.User.Identity.Name);
+
+            return View(context.GetMatchingRecipes(loulaUser));
+        }
+
     }
 }
