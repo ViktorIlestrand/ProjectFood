@@ -12,8 +12,8 @@
 //}
 
 $(function () {
-    function log(message) {
-        $("<div>").text(message).prependTo("#log");
+    function logFood(message) {
+        $("<li>").text(message).prependTo("#log");
         $("#log").scrollTop(0);
     }
 
@@ -42,7 +42,8 @@ $(function () {
                 success: function (data) {
                     console.log(data);
                     if (data === "Added") {
-                        log(ui.item.value);
+                        logFood(ui.item.value);
+                        //logOptions();
                         $('#myFood').val('');
                     }
 
