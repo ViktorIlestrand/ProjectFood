@@ -26,7 +26,7 @@ namespace ProjectFood.Models.Entities
             var identityUser = await userManager.FindByNameAsync(username);
             //Här hämtar vi ut Loula.User.Id med hjälp av vår IdentityUser 
             var loulaUser = this.User
-                .Include(o => o.UserFoodItem)
+                .Include(o => o.UserFoodItem )
                 .SingleOrDefault(
                 o => o.AspNetId == identityUser.Id
                 );
@@ -105,7 +105,7 @@ namespace ProjectFood.Models.Entities
             if (!itemAlreadyExists)
             {
                 //skapa ny userfooditem
-                UserFoodItem newUserFoodItem = new Entities.UserFoodItem() { FoodItemId = foodItemId, UserId = userId };
+                UserFoodItem newUserFoodItem = new Entities.UserFoodItem() { FoodItemId = foodItemId, UserId = userId, Expires = new DateTime(19,01,01)};
 
                 //spara i databasen
                 UserFoodItem.Add(newUserFoodItem);
@@ -115,9 +115,23 @@ namespace ProjectFood.Models.Entities
             return message;
         }
 
-        public void doStuff(string foodName, string date)
+        public void changeDate(User user, string foodName, string date)
         {
+            //existerar inte eftersom vi inte lyckats includa FoodItem när vi laddade UserFoodItem.
+            //hint: vi laddade UserFoodItem i loulaUser
+            bool exists = user.UserFoodItem
+                .Any(u => u.FoodItem.Name == foodName);
 
+            if (exists)
+            {
+                //istället för dummy data konvertera string date till vårt datetime
+                DateTime dateTime = new DateTime(12,12,12);
+                var userFoodItem = user.UserFoodItem
+                    .Where(u => u.FoodItem.Name == foodName)
+                    .Select(u => u.Expires = dateTime);
+                SaveChanges();
+            }
+            //if !alreadyExists, skapa upp ny?
         }
     }
 }

@@ -60,14 +60,15 @@ $(function () {
             $('table#log tr#' + dateIndex).children('#' + dateIndex).html(date.toString());
             $("#datepicker").hide();
             //plocka fram userfooditem
-            var foodName = $('table#log tr#' + dateIndex).children('#' + 1).val();
+            var foodName = $('table#log tr#' + dateIndex).children('#denna').html();
+            
 
             //ajax för att ändra datum på server sidan
-            $.ajax({
+            $.post({
                 url: "/User/SaveExpireDate",
                 dataType: "json",
                 data: {
-                    expireDate: date,
+                    date: date,
                     foodName: foodName
                 },
                 success: function (data) {

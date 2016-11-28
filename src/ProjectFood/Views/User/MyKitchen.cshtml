@@ -26,7 +26,7 @@
         @{foreach (var item in Model.MyFood)
             {
                 <tr id="@index">
-                    <td id="1" onclick="doStuff(@item.FoodItem.Name, @index)">@item.FoodItem.Name</td>
+                    <td id="denna" onclick="doStuff(@item.FoodItem.Name, @index)">@item.FoodItem.Name</td>
                     <td id="@index" onclick="changeDate(@index)">@item.Expires</td>
                     <td onclick="removeItem(@index)">Ta bort</td>
                 </tr>
