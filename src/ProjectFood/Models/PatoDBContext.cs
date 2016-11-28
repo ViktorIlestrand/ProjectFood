@@ -28,6 +28,7 @@ namespace ProjectFood.Models.Entities
             //Här hämtar vi ut Loula.User.Id med hjälp av vår IdentityUser 
             var loulaUser = this.User
                 .Include(o => o.UserFoodItem)
+                .ThenInclude(o => o.FoodItem)
                 .SingleOrDefault(
                 o => o.AspNetId == identityUser.Id
                 );
@@ -157,7 +158,7 @@ namespace ProjectFood.Models.Entities
 
                     foreach (var useritem in useritems)
                     {
-                        if(ingredient.FoodItem == useritem)
+                        if(ingredient.FoodItem.Name == useritem.Name)
                         {
                             match = true;
                             break;
@@ -179,8 +180,8 @@ namespace ProjectFood.Models.Entities
 
         public double GetMatchPercentage(List<FoodMatching> list)
         {
-            int truesey = 0;
-            int falsey = 0;
+            double truesey = 0;
+            double falsey = 0;
 
             foreach (var item in list)
             {
@@ -192,10 +193,11 @@ namespace ProjectFood.Models.Entities
                     falsey++;
                 }
             }
-            if (list.Count == 0)
-                return 0;
-            else
-                return truesey / (truesey + falsey);
+            //if (list.Count == 0)
+            //    return 0;
+            //else
+            double result = (truesey / (truesey + falsey));
+            return result;
 
         }
 
