@@ -157,9 +157,9 @@ namespace ProjectFood.Controllers
         {
             var loulaUser = await context.GetLoulaUser(User.Identity.Name);
             
-            context.SaveFoodItem(food, loulaUser.Id);
+            var status = context.SaveFoodItem(food, loulaUser.Id);
 
-            return JsonConvert.SerializeObject("ok");
+            return JsonConvert.SerializeObject(status);
         }
 
         [HttpGet]

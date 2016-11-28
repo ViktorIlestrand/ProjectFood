@@ -87,7 +87,7 @@ namespace ProjectFood.Models.Entities
             return list;
         }
 
-        public void SaveFoodItem(string food, int userId)
+        public string SaveFoodItem(string food, int userId)
         {
             //kolla i databasen efter foodItem med samma namn
             var Id = FoodItem
@@ -100,6 +100,8 @@ namespace ProjectFood.Models.Entities
             var itemAlreadyExists = UserFoodItem
                 .Any(u => (u.FoodItemId == foodItemId) && (u.UserId == userId));
 
+            string message = "Not added";
+
             if (!itemAlreadyExists)
             {
                 //skapa ny userfooditem
@@ -108,7 +110,9 @@ namespace ProjectFood.Models.Entities
                 //spara i databasen
                 UserFoodItem.Add(newUserFoodItem);
                 SaveChanges();
+                message = "Added";
             }
+            return message;
         }
     }
 }

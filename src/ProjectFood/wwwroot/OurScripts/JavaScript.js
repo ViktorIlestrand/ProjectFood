@@ -32,7 +32,6 @@ $(function () {
         },
         minLength: 1,
         select: function (event, ui) {
-            log(ui.item.value);
             console.log(ui.item.value);
             $.post({
                 url: "/User/SaveFood",
@@ -42,6 +41,11 @@ $(function () {
                 },
                 success: function (data) {
                     console.log(data)
+                    if (data == "Added") {
+                        log(ui.item.value);
+                        $('#myFood').val('');
+                    }
+
                 }
             });
 
