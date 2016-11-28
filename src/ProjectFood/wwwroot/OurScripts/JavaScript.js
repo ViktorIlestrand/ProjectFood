@@ -40,8 +40,8 @@ $(function () {
                     food: ui.item.value
                 },
                 success: function (data) {
-                    console.log(data)
-                    if (data == "Added") {
+                    console.log(data);
+                    if (data === "Added") {
                         log(ui.item.value);
                         $('#myFood').val('');
                     }
@@ -52,3 +52,11 @@ $(function () {
         }
     });
 });
+
+function doStuff(id) {
+    //markering
+
+    //options för att lägga till expiry date
+
+    //delete
+}

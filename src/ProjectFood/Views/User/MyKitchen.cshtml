@@ -17,15 +17,17 @@
     <input id="myFood">
 </div>
 
-<div class="ui-widget" style="margin-top:2em; font-family:Arial">
+<div class="ui-widget" style="margin-top:2em; font-family:Arial" >
     MAT
-    <div id="log" style="height: 200px; width: 150px; overflow: auto;" class="ui-widget-content">
+    <ul id="log" style="height: 200px; width: 150px; overflow: auto; list-style-type: none; padding: 0; margin:0;" class="ui-widget-content">
+        @{int index = 0; }
         @{foreach (var item in Model.MyFood)
             {
-                @item.FoodItem.Name <br/>
+                <li id="@item.FoodItem.Name" onclick="doStuff(@item.FoodItem.Name, @index)">@item.FoodItem.Name</li>
+                index++;
             }
         } 
-    </div>
+    </ul>
 </div>
 
 @*@{ foreach (var item in Model.AddableFood)
