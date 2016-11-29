@@ -128,7 +128,7 @@ namespace ProjectFood.Models.Entities
             if (exists)
             {
                 //istället för dummy data konvertera string date till vårt datetime
-                DateTime dateTime = new DateTime(12, 12, 12);
+                var dateTime = Convert.ToDateTime(date);
                 var userFoodItem = user.UserFoodItem
                     .Where(u => u.FoodItem.Name == foodName)
                     .Select(u => u.Expires = dateTime).ToArray();
