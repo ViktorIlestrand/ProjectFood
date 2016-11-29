@@ -11,25 +11,27 @@
     td, thead {
         cursor: pointer;
     }
+
+    textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus {   
+    border-color: rgba(229, 103, 23, 0.8);
+    box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075) inset, 0 0 8px rgba(229, 103, 23, 0.6);
+    outline: 0 none;
+}
+
 </style>
 
 
-<div class="ui-widget">
-    <container>
-        @*<label for="myFood" class="col-md-6 control-label">LÄGG TILL MATVARA </label>*@
-        <h2 class="col-md-offset-5">LÄGG TILL MATVARA</h2>
-        <br />
-        <br />
-        <div class="row">
-            <div class="col-xs-4">
-                <input id="myFood" class="form-control">
-            </div>
 
+    <div class="container" style="width: 50%">
+        <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12" >
+                <h2 style="text-align:center; color:#fed136">LÄGG TILL MATVARA</h2>
             <br />
+            
+            <input id="myFood" class="form-control" placeholder="Sök Matvara">
             <br />
-            <div class="ui-widget container" style="margin-top:2em; font-family:Arial">
+            
 
-                <table id="log" style="height: 200px; width: 300px;" class="@*ui-widget-content*@ tablesorter table table-striped">
+                <table id="log" class="tablesorter table table-striped">
                     @{int index = 0; }
                     <thead><tr> <th>Råvara</th> <th>Utgångsdatum</th><th>Ta bort</th> </tr></thead>
                     <tbody>
@@ -52,5 +54,4 @@
                 <p id="indexNextRow" hidden="hidden">@index</p>
             </div>
         </div>
-    </container>
-</div>
+
