@@ -130,7 +130,7 @@ namespace ProjectFood.Models.Entities
                 var dateTime = Convert.ToDateTime(date);
                 var userFoodItem = user.UserFoodItem
                     .Where(u => u.FoodItem.Name == foodName)
-                    .Select(u => u.Expires = dateTime);
+                    .Select(u => u.Expires = dateTime).ToArray();
                 SaveChanges();
             }
             //if !alreadyExists, skapa upp ny?
