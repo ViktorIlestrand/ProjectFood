@@ -209,6 +209,11 @@ namespace ProjectFood.Controllers
             return JsonConvert.SerializeObject("ok");
         }
 
+        public IActionResult RecipeDetails(int id)
+        {
+            return View(context.GetRecipeById(id));
+        } 
+
 
     }
 }

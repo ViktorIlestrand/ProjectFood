@@ -292,7 +292,7 @@ namespace ProjectFood.Models.Entities
                 }
 
                 double matchpercentage = GetMatchPercentage(listOfFoodMatches);
-                var recipevm = new RecipeVM(recipe.Title, recipe.Portions, recipeingredients, listOfFoodMatches, matchpercentage, recipe.Instructions, recipe.ImageUrl, recipe.CookingTime);
+                var recipevm = new RecipeVM(recipe.Id, recipe.Title, recipe.Portions, recipeingredients, listOfFoodMatches, matchpercentage, recipe.Instructions, recipe.ImageUrl, recipe.CookingTime);
 
                 recipevmsToReturn.Add(recipevm);
             }
@@ -362,14 +362,23 @@ namespace ProjectFood.Models.Entities
 
         public List<UserFoodItem> CheckExpiringUserFoodItems(User user)
         {
+            //skapa upp en tom lista att adda utgående matvaror till om det finns sådana
             var foodItemsExpiring = new List<UserFoodItem>();
-            var dateTimeNow = DateTime.Now;
-            //var tmpUser = GetExpiryDates(user);
+            //lagrar dagens datum i en variabel och adderar 2 dagar till den, för att få med matvaror
+            //som går ut inom 48 timmar
+            DateTime dateTimeNow = DateTime.Now.AddDays(2);
 
+            //loopar igenom användarens matvarors utgångsdatum
             foreach (var item in user.UserFoodItem)
             {
-                if (item.Expires != null && dateTimeNow.Day.CompareTo(item.Expires.Value.Day - 2) >= 0)
+                var expiryDate = item.Expires.GetValueOrDefault();   
+
+                //nullcheck för DateTime (null är 0001-01-01 00:00:00)
+                if (expiryDate.Year > 1)
                 {
+                    var result = DateTime.Compare(dateTimeNow, expiryDate);
+                    //om matvaran är på väg att gå ut så lägger vi till den i listan foodItemsExpiring
+                    if (result >= 0)
                     foodItemsExpiring.Add(item);
                 }
                 else
@@ -379,6 +388,18 @@ namespace ProjectFood.Models.Entities
             }
 
             return foodItemsExpiring;
+        }
+
+        public RecipeDetailsVM GetRecipeById(int id)
+        {
+            var result = Recipe
+                .Include(p => p.RecipeFoodItem)
+                .ThenInclude(p => p.FoodItem)
+                .FirstOrDefault(p => p.Id == id);
+
+            var recipeDetailsVM = new RecipeDetailsVM(result.Title, result.Instructions, result.Portions, result.CookingTime, result.ImageUrl, result.RecipeFoodItem.ToList());
+
+            return recipeDetailsVM;
         }
     }
 }

@@ -1,0 +1,38 @@
+﻿@model ProjectFood.Models.ViewModels.RecipeVM.RecipeDetailsVM
+
+@{
+    ViewData["Title"] = "RecipeDetails";
+}
+
+<style>
+    body {
+        padding-top: 130px;
+    }
+
+    td {
+        cursor: pointer;
+    }
+</style>
+
+<div class="col-md-9">
+
+    <div class="thumbnail">
+        <img class="img-responsive" src="@Model.ImgUrl" alt="">
+        <div class="caption-full">
+            <h4 class="pull-right">@Model.Portions Portioner</h4>
+            <br />
+            <h4 class="pull-right">@Model.CookingTime Minuter</h4>
+            <h4>
+                <a href="#">@Model.Title</a>
+            </h4>
+            <ul>
+                @foreach (var item in Model.Ingredients)
+                {
+                    <li>@item.FoodItem.Name</li>
+                }
+            </ul>
+            <p>@Model.Instructions</p>
+        </div>
+    </div>
+    </div>
+

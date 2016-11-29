@@ -8,6 +8,7 @@ namespace ProjectFood.Models.ViewModels.RecipeVM
 {
     public class RecipeVM
     {
+        public int RecipeId { get; set; }
         public string Title { get; set; }
         public int Portions { get; set; }
         public List<RecipeFoodItem> Ingredients { get; set; }
@@ -17,9 +18,10 @@ namespace ProjectFood.Models.ViewModels.RecipeVM
         public string Picture { get; set; }
         public int CookingTime { get; set; }
 
-        public RecipeVM(string title, int portions, List<RecipeFoodItem> ingredients, List<FoodMatching> ingredientmatch, 
+        public RecipeVM(int recipeId, string title, int portions, List<RecipeFoodItem> ingredients, List<FoodMatching> ingredientmatch, 
             double matchpercentage, string instruction, string picture, int cookingtime)
         {
+            RecipeId = recipeId;
             Title = title;
             Portions = portions;
             Ingredients = ingredients;
