@@ -84,7 +84,7 @@ namespace ProjectFood.Controllers
         public async Task<IActionResult> MyKitchen()
         {
             //Här hämtar vi ut Loula.Users alla proppar och lagrar i en Userinstans som vi kallar loulaUser
-            var loulaUser = await context.GetLoulaUser(User.Identity.Name);
+            var loulaUser = await context.GetLoulaUser(User);
             var id = loulaUser.Id;
             var myKitchenVM = new MyKitchenVM(loulaUser.UserFoodItem.ToList(), context.GetPopularFoodItems(10));
 
@@ -155,7 +155,7 @@ namespace ProjectFood.Controllers
         [HttpPost]
         public async Task<string> SaveFood([FromForm]string food)
         {
-            var loulaUser = await context.GetLoulaUser(User.Identity.Name);
+            var loulaUser = await context.GetLoulaUser(User);
             
             var status = context.SaveFoodItem(food, loulaUser.Id);
 
@@ -165,7 +165,7 @@ namespace ProjectFood.Controllers
         [HttpPost]
         public async Task<string> RemoveFood([FromForm]string foodName)
         {
-            var loulaUser = await context.GetLoulaUser(User.Identity.Name);
+            var loulaUser = await context.GetLoulaUser(User);
 
             var status = context.RemoveFoodFromKitchen(foodName, loulaUser);
 
@@ -175,7 +175,7 @@ namespace ProjectFood.Controllers
         [HttpGet]
         public string MyFood()
         {
-            var loulaUser = context.GetLoulaUser(User.Identity.Name);
+            var loulaUser = context.GetLoulaUser(User);
 
             var userFood = loulaUser.Result.UserFoodItem;
             
@@ -184,7 +184,7 @@ namespace ProjectFood.Controllers
 
         public async Task<IActionResult> Recipes()
         {
-            var loulaUser = await context.GetLoulaUser(this.User.Identity.Name);
+            var loulaUser = await context.GetLoulaUser(User);
 
             var expiringFoodItems = context.CheckExpiringUserFoodItems(loulaUser);
 
@@ -200,7 +200,7 @@ namespace ProjectFood.Controllers
         [HttpPost]
         public async Task<string> SaveExpireDate([FromForm]string foodName, [FromForm] string date)
         {
-            var loulaUser = await context.GetLoulaUser(User.Identity.Name);
+            var loulaUser = await context.GetLoulaUser(User);
 
             //plocka fram userfooditem utifrån foodname och user
             context.changeDate(loulaUser, foodName, date);

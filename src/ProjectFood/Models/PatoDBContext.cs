@@ -6,6 +6,7 @@ using ProjectFood.Models.ViewModels.UserVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ProjectFood.Models.Entities
@@ -21,16 +22,15 @@ namespace ProjectFood.Models.Entities
 
 
         //Inparametern kommer in med hjälp av den icke-persistenta cookien (User.Identity.Name)
-        public async Task<User> GetLoulaUser(string username)
+        public async Task<User> GetLoulaUser(ClaimsPrincipal user)
         {
             //UserManagern kan med hjälp av användarnamnet hämta ut en IdentityUser från databasen enl nedan
-            var identityUser = await userManager.FindByNameAsync(username);
             //Här hämtar vi ut Loula.User.Id med hjälp av vår IdentityUser 
-            var loulaUser = this.User
+            var loulaUser = await this.User
                 .Include(o => o.UserFoodItem)
                 .ThenInclude(o => o.FoodItem)
-                .SingleOrDefault(
-                o => o.AspNetId == identityUser.Id
+                .SingleOrDefaultAsync(
+                o => o.AspNetId == userManager.GetUserId(user)
                 );
 
             return loulaUser;
