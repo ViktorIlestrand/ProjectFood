@@ -32,7 +32,7 @@
                     <tr id="@index">
                         <td id="denna">@item.FoodItem.Name</td>
                         <td id="@index" onclick="changeDate(@index)">@date</td>
-                        <td onclick="removeItem('@item.FoodItem.Name', @index)">Ta bort</td>
+                        <td onclick="removeItem('@item.FoodItem.Name', @index)"><span class="glyphicon glyphicon-remove"></span></td>
                     </tr>
                     index++;
                 }
