@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ProjectFood.Models.Entities
 {
-    public partial class FoodItem
+    public partial class FoodItem : IComparer<string>
     {
         public FoodItem()
         {
@@ -20,5 +20,10 @@ namespace ProjectFood.Models.Entities
         public virtual ICollection<RecipeFoodItem> RecipeFoodItem { get; set; }
         public virtual ICollection<UserFoodItem> UserFoodItem { get; set; }
         public virtual FoodType FoodType { get; set; }
+
+        public int Compare(string x, string y)
+        {
+            return string.Compare(x, y, StringComparison.CurrentCultureIgnoreCase);
+        }
     }
 }
