@@ -8,6 +8,7 @@ namespace ProjectFood.Models.ViewModels.RecipeVM
 {
     public class RecipeDetailsVM
     {
+        public enum MeasurementTable { st = 1, gram, dl, tsk, krm, msk };
         public string Title { get; set; }
         public string Instructions { get; set; }
         public int Portions { get; set; }
@@ -24,5 +25,9 @@ namespace ProjectFood.Models.ViewModels.RecipeVM
             ImgUrl = img;
             Ingredients = ingredients;
         }
+
+        //private List<RecipeFoodItemVM> ConvertIntsToMeasurement(List<RecipeFoodItem> list){
+            
+        //}
     }
 }
