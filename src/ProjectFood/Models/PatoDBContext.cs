@@ -124,6 +124,7 @@ namespace ProjectFood.Models.Entities
             bool exists = user.UserFoodItem
                 .Any(u => u.FoodItem.Name == foodName);
 
+
             if (exists)
             {
                 //istället för dummy data konvertera string date till vårt datetime
@@ -174,7 +175,9 @@ namespace ProjectFood.Models.Entities
 
                 recipevmsToReturn.Add(recipevm);
             }
-            return recipevmsToReturn;
+
+            var sortedList = recipevmsToReturn.OrderByDescending(p => p.MatchPercentage).ToList();
+            return sortedList;
         }
 
 
