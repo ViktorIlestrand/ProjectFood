@@ -144,38 +144,52 @@ namespace ProjectFood.Models.Entities
             //recipesMatched återspeglar en lista på recept som innehåller samtliga fooditems som är på väg att gå ut(1 eller flera)
             var recipesMatched = new List<Recipe>();
 
-            foreach (var recipe in recipes)
+            bool resultIsEmpty = true;
+            int numberOfUserfoodItems = userFoodItems.Count;
+
+            while (resultIsEmpty)
             {
-                var recipeingredients = GetFoodItemForRecipe(recipe);
-                //matchedFoodItems håller reda på hur många fooditems som fått träff i receptet
-                int matchedFoodItems = 0;
 
-                foreach (var ingredient in recipeingredients)
+                foreach (var recipe in recipes)
                 {
-                    var foodItems = new List<FoodItem>();
+                    var recipeingredients = GetFoodItemForRecipe(recipe);
+                    //matchedFoodItems håller reda på hur många fooditems som fått träff i receptet
+                    int matchedFoodItems = 0;
 
-                    foreach (var item in userFoodItems)
+                    foreach (var ingredient in recipeingredients)
                     {
-                        foodItems.Add(item.FoodItem);
-                    }
+                        var foodItems = new List<FoodItem>();
 
-                    foreach (var fooditem in foodItems)
-                    {
-                        if (fooditem == ingredient.FoodItem)
+                        foreach (var item in userFoodItems)
                         {
-                            //om vi får träff plusar vi på matchedfootitems
-                            matchedFoodItems++;
-                            break;
+                            foodItems.Add(item.FoodItem);
+                        }
+
+                        foreach (var fooditem in foodItems)
+                        {
+                            if (fooditem == ingredient.FoodItem)
+                            {
+                                //om vi får träff plusar vi på matchedfootitems
+                                matchedFoodItems++;
+                                break;
+                            }
                         }
                     }
+                    //Här checkar vi om vi har lika många träffar som fooditems. I så fall har vi ett matchande recept och
+                    //lägger till det i listan över recept som innehåller fooditemsen vi har skickat in
+                    if (matchedFoodItems == numberOfUserfoodItems)
+                    {
+                        recipesMatched.Add(recipe);
+                    }
                 }
-                //Här checkar vi om vi har lika många träffar som fooditems. I så fall har vi ett matchande recept och
-                //lägger till det i listan över recept som innehåller fooditemsen vi har skickat in
-                if (matchedFoodItems == userFoodItems.Count)
+                if (recipesMatched.Count == 0)
                 {
-                    recipesMatched.Add(recipe);
+                    numberOfUserfoodItems--;
                 }
-
+                else
+                {
+                    resultIsEmpty = false;
+                }
             }
 
             //det är här jag börjar reflektera över hur effektiv vår samt min kod egentligen är, men jag kör på ändå.
