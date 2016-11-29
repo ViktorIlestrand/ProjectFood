@@ -39,8 +39,6 @@ namespace ProjectFood.Controllers
 
         public IActionResult Index()
         {
-            
-
             return View();
         }
 
@@ -77,7 +75,12 @@ namespace ProjectFood.Controllers
             entityUser.AspNetId = user.Id;
             context.User.Add(entityUser);
             context.SaveChanges();
-                            
+
+            var result2 = await signInManager.PasswordSignInAsync(
+                viewModel.UserName, viewModel.Password, false, false);
+
+            var boolen = signInManager.IsSignedIn(User);
+
             return RedirectToAction(nameof(MyKitchen));
         }
 
@@ -133,13 +136,14 @@ namespace ProjectFood.Controllers
         }
 
         // POST: /Account/LogOff
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[HttpPost]
+       // [ValidateAntiForgeryToken]
         public async Task<IActionResult> LogOff()
         {
+
             await signInManager.SignOutAsync();
             _logger.LogInformation(4, "User logged out.");
-            return RedirectToAction(nameof(UserController.Index), "Home");
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
 
@@ -207,6 +211,11 @@ namespace ProjectFood.Controllers
 
             return JsonConvert.SerializeObject("ok");
         }
+
+        public IActionResult RecipeDetails(int id)
+        {
+            return View(context.GetRecipeById(id));
+        } 
 
 
     }

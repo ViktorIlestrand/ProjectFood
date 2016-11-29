@@ -1,4 +1,10 @@
 ﻿<!DOCTYPE html>
+@using Microsoft.AspNetCore.Identity.EntityFrameworkCore
+@using Microsoft.AspNetCore.Identity
+@using ProjectFood.Models
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 
 <html>
 <head>
@@ -26,6 +32,7 @@
 
     <!-- Theme CSS -->
     <link href="~/css/agency.min.css" rel="stylesheet" />
+
     <style>
         body {
             background-color: ghostwhite;
@@ -65,9 +72,22 @@
                         <a asp-controller="User" asp-action="MyKitchen">Mitt Kök</a>
 
                     </li>
-                    <li class="@(ViewData["Title"].ToString() == "Login" ? "active" : "")">
-                        <a asp-controller="User" asp-action="Login">Logga in</a>
-                    </li>
+
+                    @{ if (!SignInManager.IsSignedIn(User))
+                        {
+                            <li class="@(ViewData["Title"].ToString() == "Login" ? "active" : "")">
+                                <a asp-controller="User" asp-action="Login">Logga in</a>
+                            </li>
+
+                        }
+                        else
+                        {
+                            <li class="@(ViewData["Title"].ToString() == "LogOut" ? "active" : "")">
+                                <a asp-controller="User" asp-action="LogOff">Logga ut</a>
+                            </li>
+                        }
+                    }
+
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -84,8 +104,6 @@
 
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-    @*detta kanske måste flyttas??*@
     <script src="~/OurScripts/JavaScript.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
@@ -94,7 +112,13 @@
     <!-- Plugin JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 
+    <!-- Plugin Tablesorter -->
+    @*<script type="text/javascript" src="/path/to/jquery.tablesorter.js"></script>*@
+    <script src="~/vendor/jquery/jquery.tablesorter.js"></script>
     <!-- Theme JavaScript -->
     <script src="~/js/agency.min.js"></script>
+
+    <!-- tablesorter widgets (optional) -->
+    @*<script type="text/javascript" src="/path/to/jquery.tablesorter.widgets.js"></script>*@
 </body>
 </html>

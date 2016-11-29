@@ -1,0 +1,33 @@
+﻿@model  ProjectFood.Models.ViewModels.RecipeVM.RecipeVM
+
+@{
+    List<bool> trueList = new List<bool>();
+
+    @foreach (var item in Model.IngredientMatch)
+    {
+        if (item.UserHasItem)
+        {
+            trueList.Add(true);
+        }
+    }
+}
+
+@if (trueList.Count == Model.IngredientMatch.Count)
+{
+    <b>Du har allt till detta recept!</b>
+}
+else
+{
+    <b>För detta recept saknar du: </b>
+    <ul>
+        @foreach (var item in Model.IngredientMatch)
+        {
+            if (!item.UserHasItem)
+            {
+                <li>@item.FoodItem</li>
+            }
+        }
+    </ul>
+}
+
+

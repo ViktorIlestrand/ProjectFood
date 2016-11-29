@@ -1,0 +1,40 @@
+﻿@model ProjectFood.Models.ViewModels.RecipeVM.RecipeDetailsVM
+
+@{
+    ViewData["Title"] = "RecipeDetails";
+
+    var measurements = new string[]{ "", "st", "gram", "dl", "tsk", "krm", "msk" };
+}
+
+
+<style>
+    body {
+        padding-top: 130px;
+    }
+
+    td {
+        cursor: pointer;
+    }
+</style>
+
+<div class="col-md-9">
+
+    <div class="thumbnail">
+        <img class="img-responsive" src="@Model.ImgUrl" alt="">
+        <div class="caption-full">
+            <h4 class="pull-right">@Model.Portions Portioner </h4>
+            <h4>@Model.Title</h4>
+            <h4 class="pull-right">@Model.CookingTime Minuter</h4>
+            <ul>
+                @foreach (var item in Model.Ingredients)
+                {
+                    var result = item.Measurement != null && item.Measurement > 0 ? @measurements[item.Measurement.Value] : "";
+                    <li>@item.Quantity @result<b> @item.FoodItem.Name</b></li>
+                }
+            </ul>
+            <b>Gör såhär:</b>
+            <p>@Model.Instructions</p>
+        </div>
+    </div>
+    </div>
+

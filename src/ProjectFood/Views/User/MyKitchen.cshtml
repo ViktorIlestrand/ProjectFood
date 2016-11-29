@@ -7,38 +7,50 @@
     body {
         padding-top: 130px;
     }
-    td {
+
+    td, thead {
         cursor: pointer;
     }
 </style>
 
 
 <div class="ui-widget">
-    <label for="myFood">Sök Matvara: </label>
-    <input id="myFood">
+    <container>
+        @*<label for="myFood" class="col-md-6 control-label">LÄGG TILL MATVARA </label>*@
+        <h2 class="col-md-offset-5">LÄGG TILL MATVARA</h2>
+        <br />
+        <br />
+        <div class="row">
+            <div class="col-xs-4">
+                <input id="myFood" class="form-control">
+            </div>
 
-</div>
+            <br />
+            <br />
+            <div class="ui-widget container" style="margin-top:2em; font-family:Arial">
 
-
-<div class="ui-widget" style="margin-top:2em; font-family:Arial">
-    MAT
-    <table id="log" style="height: 200px; width: 300px;" class="ui-widget-content">
-        @{int index = 0; }
-        <tr> <th>Råvara</th> <th>Utgångsdatum</th><th>Ta bort</th> </tr>
-        @{foreach (var item in Model.MyFood)
+                <table id="log" style="height: 200px; width: 300px;" class="@*ui-widget-content*@ tablesorter table table-striped">
+                    @{int index = 0; }
+                    <thead><tr> <th>Råvara</th> <th>Utgångsdatum</th><th>Ta bort</th> </tr></thead>
+                    <tbody>
+                        @{foreach (var item in Model.MyFood)
             {
                 var date = item.Expires != null && item.Expires.ToString().Length > 9 ? item.Expires.ToString().Substring(0, 10) : "Saknar utgång";
-                <tr id="@index">
-                    <td id="denna">@item.FoodItem.Name</td>
-                    <td id="@index" onclick="changeDate(@index)">@date</td>
-                    <td onclick="removeItem('@item.FoodItem.Name', @index)">Ta bort</td>
-                </tr>
-                index++;
-            }
-        }
-    </table>
+                                <tr id="@index">
+                                    <td id="denna">@item.FoodItem.Name</td>
+                                    <td id="@index" onclick="changeDate(@index)">@date</td>
+                                    <td onclick="removeItem('@item.FoodItem.Name', @index)"><span class="glyphicon glyphicon-remove"></span></td>
+                                </tr>
+                                index++;
+                            }
+                        }
+                    </tbody>
+                </table>
 
-    <input type="text" id="datepicker">
-    <p id="selectedDateIndex"></p>
-    <p id="indexNextRow" hidden="hidden">@index</p>
+                <input type="text" id="datepicker"> @*//visas när man trycker så saknar utgång*@
+                <p id="selectedDateIndex"></p>
+                <p id="indexNextRow" hidden="hidden">@index</p>
+            </div>
+        </div>
+    </container>
 </div>
