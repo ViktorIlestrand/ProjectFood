@@ -162,6 +162,16 @@ namespace ProjectFood.Controllers
             return JsonConvert.SerializeObject(status);
         }
 
+        [HttpPost]
+        public async Task<string> RemoveFood([FromForm]string foodName)
+        {
+            var loulaUser = await context.GetLoulaUser(User.Identity.Name);
+
+            var status = context.RemoveFoodFromKitchen(foodName, loulaUser);
+
+            return JsonConvert.SerializeObject(status);
+        }
+
         [HttpGet]
         public string MyFood()
         {

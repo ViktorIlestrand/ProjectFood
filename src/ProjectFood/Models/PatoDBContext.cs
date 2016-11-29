@@ -58,9 +58,13 @@ namespace ProjectFood.Models.Entities
             }
 
         }
-        public void RemoveFoodFromKitchen(User user, UserFoodItem food)
+        public string RemoveFoodFromKitchen(string foodName, User user)
         {
-            user.UserFoodItem.Remove(food);
+            var foodToRemove = UserFoodItem
+                .FirstOrDefault(u => (u.FoodItem.Name == foodName) && (u.UserId == user.Id));
+            UserFoodItem.Remove(foodToRemove);
+            SaveChanges();
+            return "ok";
         }
 
         public List<FoodItem> GetPopularFoodItems(int number)

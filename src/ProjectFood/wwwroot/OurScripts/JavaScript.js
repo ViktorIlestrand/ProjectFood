@@ -13,7 +13,12 @@
 
 $(function () {
     function logFood(message) {
-        $("<tr>").text(message).prependTo("#log");
+        //$("<tr>").text(message).appendTo("#log");
+        var indexNextRow = $('#indexNextRow').html();
+
+        $('#log').append('<tr id="' + indexNextRow + '"><td id="denna">' + message + '</td><td id="' + indexNextRow + '" onclick="changeDate(' + indexNextRow + ')">Saknar utgång</td><td onclick="removeItem(\'' + message + '\',' +indexNextRow +')">Ta bort</td></tr>');
+        var indexNew = parseInt(indexNextRow) + 1;
+        $('#indexNextRow').html(indexNew);
         $("#log").scrollTop(0);
     }
 
@@ -61,7 +66,7 @@ $(function () {
             $("#datepicker").hide();
             //plocka fram userfooditem
             var foodName = $('table#log tr#' + dateIndex).children('#denna').html();
-            
+
 
             //ajax för att ändra datum på server sidan
             $.post({
@@ -79,21 +84,24 @@ $(function () {
     });
     $("#datepicker").hide();
 });
-function doStuff(id) {
-    //markering
 
-    //options för att lägga till expiry date
-
-    //delete
-}
-
-function removeItem(id) {
+function removeItem(foodName, id) {
     $('table#log tr#' + id).remove();
+    //ajax för att ändra datum på server sidan
+    $.post({
+        url: "/User/RemoveFood",
+        dataType: "json",
+        data: {
+            foodName: foodName
+        },
+        success: function (data) {
+            console.log(data);
+        }
+    });
     //ajax för ta bort mat ingrediens
 }
 
 function changeDate(id) {
     $('#datepicker').show();
     $('#selectedDateIndex').val(id);
-
 }
