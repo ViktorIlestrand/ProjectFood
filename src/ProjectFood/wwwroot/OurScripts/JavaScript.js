@@ -16,7 +16,7 @@ $(function () {
         //$("<tr>").text(message).appendTo("#log");
         var indexNextRow = $('#indexNextRow').html();
 
-        $('#log').append('<tr id="' + indexNextRow + '"><td id="denna">' + message + '</td><td id="' + indexNextRow + '" onclick="changeDate(' + indexNextRow + ')">Saknar utgång</td><td onclick="removeItem(\'' + message + '\',' +indexNextRow +')">Ta bort</td></tr>');
+        $('#log').append('<tr id="' + indexNextRow + '" role="row"><td id="denna">' + message + '</td><td id="' + indexNextRow + '" onclick="changeDate(' + indexNextRow + ')">Saknar utgång</td><td onclick="removeItem(\'' + message + '\',' +indexNextRow +')">Ta bort</td></tr>');
         var indexNew = parseInt(indexNextRow) + 1;
         $('#indexNextRow').html(indexNew);
         $("#log").scrollTop(0);
@@ -48,6 +48,7 @@ $(function () {
                     console.log(data);
                     if (data === "Added") {
                         logFood(ui.item.value);
+                        $("#log").tablesorter();
                         //logOptions();
                         $('#myFood').val('');
                     }
@@ -105,3 +106,8 @@ function changeDate(id) {
     $('#datepicker').show();
     $('#selectedDateIndex').val(id);
 }
+
+$(document).ready(function () {
+    $("#log").tablesorter();
+}
+);

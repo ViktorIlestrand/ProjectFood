@@ -19,6 +19,7 @@ namespace ProjectFood.Models.ViewModels.UserVM
         public MyKitchenVM(List<UserFoodItem> userFoodList, List<FoodItem> foodList)
         {
             MyFood = userFoodList;
+            MyFood = MyFood.OrderBy(x => x.FoodItem.Name, new FoodItem()).ToList();
             AddableFood = foodList;
         }
     }
