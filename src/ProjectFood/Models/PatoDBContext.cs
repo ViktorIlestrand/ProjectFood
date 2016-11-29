@@ -138,8 +138,8 @@ namespace ProjectFood.Models.Entities
 
         public List<RecipeVM> GetRecipesWithFoodItems(User user, List<FoodItem> foodItems)
         {
+            
             var recipes = GetAllRecipes();
-
             //recipesMatched återspeglar en lista på recept som innehåller samtliga fooditems som är på väg att gå ut(1 eller flera)
             var recipesMatched = new List<Recipe>();
             
@@ -197,7 +197,7 @@ namespace ProjectFood.Models.Entities
             //detta gjorde jag för att kunna returnera VMs, så vi ändå kan sortera listan efter hur väl det matchar
             //med userns kylskåp MEN med restriktionen att det bara skickas recept som innehåller matvarorna som
             // är på väg att gå ut :)
-            return recipeVMsToReturn.OrderByDescending(s => s.MatchPercentage).ToList(); ;
+            return recipeVMsToReturn.OrderByDescending(s => s.MatchPercentage).ToList();
             //gonatt!
         }
 
@@ -262,18 +262,22 @@ namespace ProjectFood.Models.Entities
                     falsey++;
                 }
             }
-            //if (list.Count == 0)
-            //    return 0;
-            //else
-            double result = (truesey / (truesey + falsey));
-            return result;
-
+            if (list.Count == 0)
+            {
+                return 0;
+            }
+            else
+            {
+                double result = (truesey / (truesey + falsey));
+                return result;
+            }
         }
 
         public List<Recipe> GetAllRecipes()
         {
              var result = Recipe
                 .Include(o => o.RecipeFoodItem)
+                .ThenInclude(o => o.FoodItem)
                 .ToList();            
 
 
@@ -290,6 +294,6 @@ namespace ProjectFood.Models.Entities
             return result;
         }
 
-        
+
     }
 }
