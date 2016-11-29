@@ -26,9 +26,10 @@
         <tr> <th>Råvara</th> <th>Utgångsdatum</th><th>Ta bort</th> </tr>
         @{foreach (var item in Model.MyFood)
             {
+                var date = item.Expires != null && item.Expires.ToString().Length > 9 ? item.Expires.ToString().Substring(0, 10) : "Saknar utgång";
                 <tr id="@index">
                     <td id="denna" onclick="doStuff(@item.FoodItem.Name, @index)">@item.FoodItem.Name</td>
-                    <td id="@index" onclick="changeDate(@index)">@item.Expires</td>
+                    <td id="@index" onclick="changeDate(@index)">@date</td>
                     <td onclick="removeItem(@index)">Ta bort</td>
                 </tr>
                 index++;
