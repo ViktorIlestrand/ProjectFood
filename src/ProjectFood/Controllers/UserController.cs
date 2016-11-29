@@ -186,7 +186,15 @@ namespace ProjectFood.Controllers
         {
             var loulaUser = await context.GetLoulaUser(this.User.Identity.Name);
 
-            return View(context.GetMatchingRecipes(loulaUser));
+            var expiringFoodItems = context.CheckExpiringUserFoodItems(loulaUser);
+
+            if (expiringFoodItems.Count != 0)
+            {
+                return View(context.GetRecipesWithFoodItems(loulaUser, expiringFoodItems));
+            }else
+            {
+                return View(context.GetMatchingRecipes(loulaUser));
+            }
         }
 
         [HttpPost]
