@@ -9,11 +9,27 @@
         padding-top: 130px;
     }
 </style>
-<div>
 
-    @{foreach (var item in Model)
-        {            
-            @item.Title <br/>
+<div class="container">
+        @{foreach (var item in Model)
+            {
+                <div class="row">
+
+                    <div class="col-sm-4 col-lg-4 col-md-4">
+                        <div class="thumbnail">
+                            <img src="@item.Picture" alt="">
+                            <div class="caption">
+                                <h4 class="pull-right"></h4>
+                                <h4>
+                                    <a href="#">@item.Title</a>
+                                </h4>
+                                @Html.Partial("_PrintRecipeShortInfo", item)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
         }
-     }
 </div>
+
+

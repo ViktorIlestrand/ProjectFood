@@ -1,0 +1,13 @@
+﻿@model  ProjectFood.Models.ViewModels.RecipeVM.RecipeVM
+
+<b>För detta recept saknar du: </b> 
+<ul>
+@foreach (var item in Model.IngredientMatch)
+{
+    if (!item.UserHasItem)
+    {
+        <li>@item.FoodItem</li>
+    }
+}
+</ul>
+
