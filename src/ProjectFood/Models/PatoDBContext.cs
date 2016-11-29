@@ -137,6 +137,71 @@ namespace ProjectFood.Models.Entities
             //if !alreadyExists, skapa upp ny?
         }
 
+        public List<RecipeVM> GetRecipesWithFoodItems(User user, List<FoodItem> foodItems)
+        {
+            var recipes = GetAllRecipes();
+
+            //recipesMatched återspeglar en lista på recept som innehåller samtliga fooditems som är på väg att gå ut(1 eller flera)
+            var recipesMatched = new List<Recipe>();
+            
+            foreach (var recipe in recipes)
+            {
+                var recipeingredients = GetFoodItemForRecipe(recipe);
+                //matchedFoodItems håller reda på hur många fooditems som fått träff i receptet
+                int matchedFoodItems = 0;
+
+                foreach (var ingredient in recipeingredients)
+                {
+                    foreach (var fooditem in foodItems)
+                    {
+                        if (fooditem == ingredient.FoodItem)
+                        {
+                            //om vi får träff plusar vi på matchedfootitems
+                            matchedFoodItems++;
+                            break;
+                        }
+                    }
+                }
+                //Här checkar vi om vi har lika många träffar som fooditems. I så fall har vi ett matchande recept och
+                //lägger till det i listan över recept som innehåller fooditemsen vi har skickat in
+                if(matchedFoodItems == foodItems.Count)
+                {
+                    recipesMatched.Add(recipe);
+                }
+                
+            }
+
+            //det är här jag börjar reflektera över hur effektiv vår samt min kod egentligen är, men jag kör på ändå.
+            //... så vi plockar ut en vanlig matchlista med hjälp av user
+            var recipeVMsToReturn = GetMatchingRecipes(user);
+
+            //sen börjar vi undersöka om VM-receptet finns med i matchedrecipes
+            foreach (var item in recipeVMsToReturn)
+            {
+                bool keepRecipeInList = false;
+
+                foreach (var recipe in recipesMatched)
+                {
+                    //om receptens namn stämmer med varandra behåller vi receptet i listan av VMs som kommmer returneras
+                    if(recipe.Title == item.Title)
+                    {
+                        keepRecipeInList = true;
+                        break;
+                    }
+                }
+                //annars slänger vi ut den VMen.
+                if (!keepRecipeInList)
+                {
+                    recipeVMsToReturn.Remove(item);
+                }
+            }
+            //detta gjorde jag för att kunna returnera VMs, så vi ändå kan sortera listan efter hur väl det matchar
+            //med userns kylskåp MEN med restriktionen att det bara skickas recept som innehåller matvarorna som
+            // är på väg att gå ut :)
+            return recipeVMsToReturn.OrderByDescending(s => s.MatchPercentage).ToList(); ;
+            //gonatt!
+        }
+
         public List<RecipeVM> GetMatchingRecipes(User user)
         {
             var recipevmsToReturn = new List<RecipeVM>();
