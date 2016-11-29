@@ -124,13 +124,14 @@ namespace ProjectFood.Models.Entities
             bool exists = user.UserFoodItem
                 .Any(u => u.FoodItem.Name == foodName);
 
+
             if (exists)
             {
                 //istället för dummy data konvertera string date till vårt datetime
-                var dateTime = Convert.ToDateTime(date);
+                DateTime dateTime = new DateTime(12, 12, 12);
                 var userFoodItem = user.UserFoodItem
                     .Where(u => u.FoodItem.Name == foodName)
-                    .Select(u => u.Expires = dateTime);
+                    .Select(u => u.Expires = dateTime).ToArray();
                 SaveChanges();
             }
             //if !alreadyExists, skapa upp ny?
@@ -239,11 +240,9 @@ namespace ProjectFood.Models.Entities
 
                 recipevmsToReturn.Add(recipevm);
             }
-            var sortedList = recipevmsToReturn.OrderByDescending(s => s.MatchPercentage).ToList();
 
+            var sortedList = recipevmsToReturn.OrderByDescending(p => p.MatchPercentage).ToList();
             return sortedList;
-
-            
         }
 
 
@@ -289,7 +288,5 @@ namespace ProjectFood.Models.Entities
 
             return result;
         }
-
-        
     }
 }
