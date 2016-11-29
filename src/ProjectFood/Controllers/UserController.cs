@@ -133,13 +133,14 @@ namespace ProjectFood.Controllers
         }
 
         // POST: /Account/LogOff
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[HttpPost]
+       // [ValidateAntiForgeryToken]
         public async Task<IActionResult> LogOff()
         {
+
             await signInManager.SignOutAsync();
             _logger.LogInformation(4, "User logged out.");
-            return RedirectToAction(nameof(UserController.Index), "Home");
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
 
