@@ -77,7 +77,12 @@ namespace ProjectFood.Controllers
             entityUser.AspNetId = user.Id;
             context.User.Add(entityUser);
             context.SaveChanges();
-                            
+
+            var result2 = await signInManager.PasswordSignInAsync(
+                viewModel.UserName, viewModel.Password, false, false);
+
+            var boolen = signInManager.IsSignedIn(User);
+
             return RedirectToAction(nameof(MyKitchen));
         }
 
