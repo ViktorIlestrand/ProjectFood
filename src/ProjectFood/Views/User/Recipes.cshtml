@@ -2,113 +2,90 @@
 
 @{
     ViewData["Title"] = "Recipes";
-    
+
+    int loopAmount = 0;
+
     if (Model.expiringRecipes.Count < 3)
     {
-        <div class="container">
-            <div class="row">
-                <h4 style="color:gray">Recept som innehåller matvaror som snart går ut</h4>
-                @{foreach (var item in Model.expiringRecipes)
-                    {
-                        <div class="col-sm-4 col-lg-4 col-md-4">
-                            <div style="padding-top:15px" class="thumbnail">
-                                <img style="width:250px; height:150px" src="@item.Picture" alt="">
-                                <div class="caption">
-                                    <h4 class="pull-right"></h4>
-                                    <h4>
-                                        <a href="/User/RecipeDetails/@item.RecipeId">@item.Title</a>
-                                    </h4>
-                                    @Html.Partial("_PrintRecipeShortInfo", item)
-                                </div>
-                            </div>
-                        </div>
-                    }
-                }
+        loopAmount = Model.expiringRecipes.Count;
+    }
+    else
+    {
+        loopAmount = 3;
 
-            </div>
-        </div>
-                    }
-                    else
-                    {
-                        <div class="container">
-                            <div class="row">
-                                <h4 style="color:gray">Recept som innehåller matvaror som snart går ut</h4>
+    }
+    <div class="container">
+        <div class="row">
+            <h4 style="color:gray">Recept som innehåller matvaror som snart går ut</h4>
+            @{for (int i = 0; i < loopAmount; i++)
+                {
+                    <div class="col-sm-4 col-lg-4 col-md-4">
+                        <div style="padding-top:15px" class="thumbnail">
+                            <img style="width:250px; height:150px" src="@Model.expiringRecipes[i].Picture" alt="">
+                            <div class="caption">
+                                <h4 class="pull-right"></h4>
+                                <h4>
+                                    <a href="/User/RecipeDetails/@Model.expiringRecipes[i].RecipeId">@Model.expiringRecipes[i].Title</a>
+                                </h4>
+                                <b>Dessa varor bör användas snart:</b><br />
+                                -
+                                @foreach (var expiringUserIngredient in Model.expiringRecipes[i].ExpiringUserIngredients)
+                                {
+                                    foreach (var recipeIngredient in Model.expiringRecipes[i].Ingredients)
+                                    {                                       
+                                        if (expiringUserIngredient.FoodItem.Name == recipeIngredient.FoodItem.Name)
+                                        {
+                                            @expiringUserIngredient.FoodItem.Name<i> - </i>
 
-                                @{for (int i = 0; i < 3; i++)
-                                    {
-                                        <div class="col-sm-4 col-lg-4 col-md-4">
-                                            <div style="padding-top:15px" class="thumbnail">
-                                                <img style="width:250px; height:150px" src="@Model.expiringRecipes[i].Picture" alt="">
-                                                <div class="caption">
-                                                    <h4 class="pull-right"></h4>
-                                                    <h4>
-                                                        <a href="/User/RecipeDetails/@Model.expiringRecipes[i].RecipeId">@Model.expiringRecipes[i].Title</a>
-                                                    </h4>
-                                                    @Html.Partial("_PrintRecipeShortInfo", Model.expiringRecipes[i])
-                                                </div>
-                                            </div>
-                                        </div>
+                                        }
                                     }
                                 }
-
+                                
+                                <br />
+                                <br />
+                                @Html.Partial("_PrintRecipeShortInfo", Model.expiringRecipes[i])
                             </div>
                         </div>
-                                    }
+                    </div>
+                }
+            }
 
+        </div>
+    </div>
 
-                                    
-                                    if (Model.matchedRecipes.Count < 6)
-                                    {
-                                        <div class="container">
-                                            <div class="row">
-                                                <h4 style="color:gray">Recept som innehåller övriga matvaror</h4>
+    @if (Model.matchedRecipes.Count < 6)
+    {
+        loopAmount = Model.matchedRecipes.Count;
+    }
+    else
+    {
+        loopAmount = 6;
 
-                                                @{foreach (var item in Model.matchedRecipes)
-                                                    {
-                                                        <div class="col-sm-4 col-lg-4 col-md-4">
-                                                            <div style="padding-top:15px" class="thumbnail">
-                                                                <img style="width:250px; height:150px" src="@item.Picture" alt="">
-                                                                <div class="caption">
-                                                                    <h4 class="pull-right"></h4>
-                                                                    <h4>
-                                                                        <a href="/User/RecipeDetails/@item.RecipeId">@item.Title</a>
-                                                                    </h4>
-                                                                    @Html.Partial("_PrintRecipeShortInfo", item)
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    }
-                                                }
+    }
+                <div class="container">
+                    <div class="row">
+                        <h4 style="color:gray">Recept som innehåller övriga matvaror</h4>
 
-                                            </div>
+                        @{for (int i = 0; i < loopAmount; i++)
+                            {
+                                <div class="col-sm-4 col-lg-4 col-md-4">
+                                    <div style="padding-top:15px" class="thumbnail">
+                                        <img style="width:250px; height:150px" src="@Model.matchedRecipes[i].Picture" alt="">
+                                        <div class="caption">
+                                            <h4 class="pull-right"></h4>
+                                            <h4>
+                                                <a href="/User/RecipeDetails/@Model.matchedRecipes[i].RecipeId">@Model.matchedRecipes[i].Title</a>
+                                            </h4>
+                                            @Html.Partial("_PrintRecipeShortInfo", Model.matchedRecipes[i])
                                         </div>
-                                                    }
-                                                    else
-                                                    {
-                                                        <div class="container">
-                                                            <div class="row">
-                                                                <h4 style="color:gray">Recept som innehåller övriga matvaror</h4>
+                                    </div>
+                                </div>
+                            }
+                        }
 
-                                                                @{for (int i = 0; i < 6; i++)
-                                                                    {
-                                                                        <div class="col-sm-4 col-lg-4 col-md-4">
-                                                                            <div style="padding-top:15px" class="thumbnail">
-                                                                                <img style="width:250px; height:150px" src="@Model.matchedRecipes[i].Picture" alt="">
-                                                                                <div class="caption">
-                                                                                    <h4 class="pull-right"></h4>
-                                                                                    <h4>
-                                                                                        <a href="/User/RecipeDetails/@Model.matchedRecipes[i].RecipeId">@Model.matchedRecipes[i].Title</a>
-                                                                                    </h4>
-                                                                                    @Html.Partial("_PrintRecipeShortInfo", Model.matchedRecipes[i])
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    }
-                                                                }
-
-                                                            </div>
-                                                        </div>
-                                                                    }
+                    </div>
+                </div>
+}
 }
 
 <style>

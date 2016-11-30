@@ -2,7 +2,7 @@
     function logFood(message) {
         var indexNextRow = $('#indexNextRow').html();
 
-        $("#log tbody").prepend('<tr id="' + indexNextRow + '" role="row"><td id="denna">' + message + '</td><td id="' + indexNextRow + '" onclick="changeDate(' + indexNextRow + ')">Saknar utgång</td><td onclick="removeItem(\'' + message + '\',' + indexNextRow + ')"><span class="glyphicon glyphicon-remove"></span></td></tr>');
+        $("#log tbody").prepend('<tr id="' + indexNextRow + '" role="row"><td id="denna">' + message + '</td><td id="' + indexNextRow + '" onclick="changeDate(' + indexNextRow + ')">Saknar utgång</td><td class="point" onclick="removeItem(\'' + message + '\',' + indexNextRow + ')"><span id="remove" class="glyphicon glyphicon-remove pull-right" "></span></td></tr>');
         $('.tablesorter').trigger('update');
         var indexNew = parseInt(indexNextRow) + 1;
         $('#indexNextRow').html(indexNew);

@@ -19,12 +19,14 @@
 <div class="container" style="width: 50%">
     <div class="col-md-12">
 
-        <div class="thumbnail" style="padding:20px">
+        <div class="thumbnail" style="padding:30px; padding-right:50px">
             <img style="width:500px; height:300px" class="img-responsive" src="@Model.ImgUrl" alt="">
             <div class="caption-full">
-                <h4 class="pull-right">@Model.Portions Portioner </h4>
+                
                 <h4>@Model.Title</h4>
-                <h4 class="pull-right">@Model.CookingTime Minuter</h4>
+                
+                <h6><span class="glyphicon glyphicon-time"></span> @Model.CookingTime min</h6>
+                <p class="pull-right">@Model.Portions Portioner </p>
                 <ul>
                     @foreach (var item in Model.Ingredients)
                     {

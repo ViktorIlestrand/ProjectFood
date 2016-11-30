@@ -12,14 +12,25 @@ using ProjectFood.Models.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using AutoMapper;
 using ProjectFood.Models.ViewModels.UserVM;
+using Microsoft.Extensions.Configuration;
 
 namespace ProjectFood
 {
     public class Startup
     {
+        public Startup(IHostingEnvironment env)
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath);
+
+            builder.AddUserSecrets();
+            Configuration = builder.Build();     
+        }
+        public IConfigurationRoot Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
-            var connString = @"Server=tcp:patodb.database.windows.net,1433;Initial Catalog=PatoDB;Persist Security Info=False;User ID=PatoDBAdmin;Password=Sommar2016!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+
+            var connString = Configuration["connString"];
 
             services.AddDbContext<PatoDBContext>(
                 options => options.UseSqlServer(connString));
