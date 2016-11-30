@@ -16,7 +16,8 @@ $(function () {
         //$("<tr>").text(message).appendTo("#log");
         var indexNextRow = $('#indexNextRow').html();
 
-        $('#log').append('<tr id="' + indexNextRow + '" role="row"><td id="denna">' + message + '</td><td id="' + indexNextRow + '" onclick="changeDate(' + indexNextRow + ')">Saknar utgång</td><td onclick="removeItem(\'' + message + '\',' + indexNextRow + ')"><span class="glyphicon glyphicon-remove"></span></td></tr>');
+        $("#log tbody").prepend('<tr id="' + indexNextRow + '" role="row"><td id="denna">' + message + '</td><td id="' + indexNextRow + '" onclick="changeDate(' + indexNextRow + ')">Saknar utgång</td><td onclick="removeItem(\'' + message + '\',' + indexNextRow + ')"><span class="glyphicon glyphicon-remove"></span></td></tr>');
+        $('.tablesorter').trigger('update');
         var indexNew = parseInt(indexNextRow) + 1;
         $('#indexNextRow').html(indexNew);
         $("#log").scrollTop(0);
