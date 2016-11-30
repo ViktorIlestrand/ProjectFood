@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using ProjectFood.Models.ViewModels.AdminVM;
 using ProjectFood.Models.ViewModels.RecipeVM;
 using ProjectFood.Models.ViewModels.UserVM;
 using System;
@@ -402,18 +403,56 @@ namespace ProjectFood.Models.Entities
             return recipeDetailsVM;
         }
 
-        public async void AddFoodItemToDB(string name, int foodType)
+        public async Task AddFoodItemToDB(AddFoodItemVM viewModel)
         {
             var newFoodItem = new FoodItem
             {
-                Name = name,
-                FoodTypeId = foodType
+                Name = viewModel.Name,
+                FoodTypeId = viewModel.FoodTypeId
             };
 
             FoodItem.Add(newFoodItem);
 
             await this.SaveChangesAsync();
             
+        }
+        public AddFoodItemVM GetAllFoodTypes()
+        {
+            var result = FoodType.ToList();
+            var viewModel = new AddFoodItemVM("", 0, result);
+            return viewModel;
+        }
+
+        public async Task AddRecipeToDB(AddRecipeVM viewModel)
+        {
+            var newRecipe = new Recipe
+            {
+                Title = viewModel.Title,
+                Instructions = viewModel.Instructions,
+                Portions = viewModel.Portions,
+                CookingTime = viewModel.CookingTime,
+                ImageUrl = viewModel.ImageUrl
+            };
+
+            Recipe.Add(newRecipe);
+
+            await this.SaveChangesAsync();
+
+        }
+
+        public AllUserRecipesVM GetRecipeLists(User user)
+        {
+            var viewModel = new AllUserRecipesVM();
+
+            var expiringFoodItems = CheckExpiringUserFoodItems(user);
+
+            var result1 = GetRecipesWithFoodItems(user, expiringFoodItems);
+            var result2 = GetMatchingRecipes(user);
+
+            viewModel.expiringRecipes = result1;
+            viewModel.matchedRecipes = result2;
+
+            return viewModel;
         }
     }
 }

@@ -191,15 +191,7 @@ namespace ProjectFood.Controllers
             
             var loulaUser = await context.GetLoulaUser(User);
 
-            var expiringFoodItems = context.CheckExpiringUserFoodItems(loulaUser);
-
-            if (expiringFoodItems.Count != 0)
-            {
-                return View(context.GetRecipesWithFoodItems(loulaUser, expiringFoodItems));
-            }else
-            {
-                return View(context.GetMatchingRecipes(loulaUser));
-            }
+            return View(context.GetRecipeLists(loulaUser));
         }
 
         [HttpPost]
