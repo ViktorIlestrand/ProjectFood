@@ -10,6 +10,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using ProjectFood.Models.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using AutoMapper;
+using ProjectFood.Models.ViewModels.UserVM;
 
 namespace ProjectFood
 {
@@ -25,7 +27,8 @@ namespace ProjectFood
             services.AddDbContext<IdentityDbContext>(
                 options => options.UseSqlServer(connString));
 
-            services.AddIdentity<IdentityUser, IdentityRole>(options => {
+            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            {
                 options.Password.RequiredLength = 6;
                 options.Password.RequireLowercase = true;
                 options.Password.RequireNonAlphanumeric = false;
@@ -38,6 +41,11 @@ namespace ProjectFood
             services.AddMvc();
             services.AddSession();
             services.AddMemoryCache();
+
+            Mapper.Initialize((config) =>
+            {
+                config.CreateMap<UserFoodItem, UserFoodItemVM>();
+            });
 
         }
 

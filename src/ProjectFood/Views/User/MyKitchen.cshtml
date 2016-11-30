@@ -1,4 +1,4 @@
-﻿@model ProjectFood.Models.ViewModels.UserVM.MyKitchenVM
+﻿@model ProjectFood.Models.ViewModels.UserVM.UserFoodItemVM[]
 
 @{
     ViewData["Title"] = "MyKitchen";
@@ -35,12 +35,14 @@
                     @{int index = 0; }
                     <thead><tr> <th>Råvara</th> <th>Utgångsdatum</th><th>Ta bort</th> </tr></thead>
                     <tbody>
-                        @{foreach (var item in Model.MyFood)
+                        @{foreach (var item in Model)
             {
-                var date = item.Expires != null && item.Expires.ToString().Length > 9 ? item.Expires.ToString().Substring(0, 10) : "Saknar utgång";
+                                var date = item.Expires != null && item.Expires.ToString().Length > 9 ? item.Expires.ToString().Substring(0, 10) : "Saknar utgång";
+                                var color = item.HasExpired ? "Red" : "Black";
+
                                 <tr id="@index">
                                     <td id="denna">@item.FoodItem.Name</td>
-                                    <td id="@index" onclick="changeDate(@index)">@date</td>
+                                    <td id="@index" onclick="changeDate(@index)" style="color:@color">@date</td>
                                     <td onclick="removeItem('@item.FoodItem.Name', @index)"><span class="glyphicon glyphicon-remove"></span></td>
                                 </tr>
                                 index++;
