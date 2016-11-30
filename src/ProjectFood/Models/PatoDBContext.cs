@@ -26,6 +26,7 @@ namespace ProjectFood.Models.Entities
         {
             var source = loulaUser.UserFoodItem;
             var viewModel = Mapper.Map<UserFoodItemVM[]>(source);
+            viewModel = viewModel.OrderBy(x => x.FoodItem.Name, new FoodItem()).ToArray();
             return viewModel;
         }
 
