@@ -188,6 +188,7 @@ namespace ProjectFood.Controllers
 
         public async Task<IActionResult> Recipes()
         {
+            
             var loulaUser = await context.GetLoulaUser(User);
 
             var expiringFoodItems = context.CheckExpiringUserFoodItems(loulaUser);
