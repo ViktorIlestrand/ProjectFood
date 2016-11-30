@@ -1,0 +1,40 @@
+﻿@model ProjectFood.Models.ViewModels.AdminVM.AddFoodItemVM
+
+@{
+    ViewData["Title"] = "AddFoodItem";
+
+}
+
+
+<style>
+    body {
+        padding-top: 130px;
+    }
+
+    td {
+        cursor: pointer;
+    }
+</style>
+
+<form asp-controller="Admin" asp-action="AddFoodItem">
+    LÄGG TILL MATVARA I DATABASEN!
+    
+    <label asp-for="Name"></label>
+    <input asp-for="Name" placeholder="Matvarunamn" />
+    <br/>
+    <label asp-for="FoodTypeId"></label>
+    <input asp-for="FoodTypeId" placeholder="Skriv ID som int" />
+    <br/>
+    <input type="submit" value="Lägg till" />
+
+       
+</form>
+<ul>
+    @{ @foreach (var item in Model.ListOfFoodTypes)
+    {
+
+        <li>@item.Name, @item.Id</li>
+
+    }
+    }
+</ul>
