@@ -301,7 +301,9 @@ namespace ProjectFood.Models.Entities
 
                 double matchpercentage = GetMatchPercentage(listOfFoodMatches);
                 var recipevm = new RecipeVM(recipe.Id, recipe.Title, recipe.Portions, recipeingredients, listOfFoodMatches, matchpercentage, recipe.Instructions, recipe.ImageUrl, recipe.CookingTime);
+                var expiringUserIngredient = CheckExpiringUserFoodItems(user);
 
+                recipevm.ExpiringUserIngredients = expiringUserIngredient;
                 recipevmsToReturn.Add(recipevm);
             }
 
@@ -453,16 +455,16 @@ namespace ProjectFood.Models.Entities
 
             var expiringFoodItems = CheckExpiringUserFoodItems(user);
 
-            var result1 = GetRecipesWithFoodItems(user, expiringFoodItems);
-            var result2 = GetMatchingRecipes(user);
+            var expiringRecipes = GetRecipesWithFoodItems(user, expiringFoodItems);
+            var matchingRecipes = GetMatchingRecipes(user);
 
             var indexesToRemove = new List<int>();
 
-            for (int i = 0; i < result2.Count; i++)
+            for (int i = 0; i < matchingRecipes.Count; i++)
             {
-                foreach (var expiringRecipe in result1)
+                foreach (var expiringRecipe in expiringRecipes)
                 {
-                    if (result2[i].Title == expiringRecipe.Title )
+                    if (matchingRecipes[i].Title == expiringRecipe.Title )
                     {
                         indexesToRemove.Add(i);
                     }
@@ -473,11 +475,11 @@ namespace ProjectFood.Models.Entities
 
             foreach (var index in indexesToRemove)
             {
-                result2.RemoveAt(index);
+                matchingRecipes.RemoveAt(index);
             }
 
-            viewModel.expiringRecipes = result1;
-            viewModel.matchedRecipes = result2;
+            viewModel.expiringRecipes = expiringRecipes;
+            viewModel.matchedRecipes = matchingRecipes;
 
             return viewModel;
         }
