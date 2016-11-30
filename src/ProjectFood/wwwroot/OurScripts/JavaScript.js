@@ -85,6 +85,8 @@ function pickDate (id) {
     });
 };
 
+//ge till lina
+
 function removeItem(foodName, id) {
     $('table#log tr#' + id).remove();
     //ajax för att ändra datum på server sidan
