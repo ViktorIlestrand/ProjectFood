@@ -17,6 +17,7 @@ namespace ProjectFood.Models.ViewModels.RecipeVM
         public string Instruction { get; set; }
         public string Picture { get; set; }
         public int CookingTime { get; set; }
+        public List<UserFoodItem> ExpiringUserIngredients { get; set; }
 
         public RecipeVM(int recipeId, string title, int portions, List<RecipeFoodItem> ingredients, List<FoodMatching> ingredientmatch, 
             double matchpercentage, string instruction, string picture, int cookingtime)
@@ -30,6 +31,7 @@ namespace ProjectFood.Models.ViewModels.RecipeVM
             Instruction = instruction;
             Picture = picture;
             CookingTime = cookingtime;
+            ExpiringUserIngredients = new List<UserFoodItem>();
         }
     }
 }
