@@ -439,5 +439,20 @@ namespace ProjectFood.Models.Entities
             await this.SaveChangesAsync();
 
         }
+
+        public AllUserRecipesVM GetRecipeLists(User user)
+        {
+            var viewModel = new AllUserRecipesVM();
+
+            var expiringFoodItems = CheckExpiringUserFoodItems(user);
+
+            var result1 = GetRecipesWithFoodItems(user, expiringFoodItems);
+            var result2 = GetMatchingRecipes(user);
+
+            viewModel.expiringRecipes = result1;
+            viewModel.matchedRecipes = result2;
+
+            return viewModel;
+        }
     }
 }

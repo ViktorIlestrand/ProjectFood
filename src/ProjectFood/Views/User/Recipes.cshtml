@@ -1,17 +1,17 @@
-﻿@model List<ProjectFood.Models.ViewModels.RecipeVM.RecipeVM>
+﻿@model ProjectFood.Models.ViewModels.RecipeVM.AllUserRecipesVM
 
 @{
     ViewData["Title"] = "Recipes";
-
-    if (Model.Count < 9)
+    
+    if (Model.expiringRecipes.Count < 3)
     {
         <div class="container">
             <div class="row">
-
-                @{foreach (var item in Model)
+                <h4 style="color:gray">Recept som innehåller matvaror som snart går ut</h4>
+                @{foreach (var item in Model.expiringRecipes)
                     {
                         <div class="col-sm-4 col-lg-4 col-md-4">
-                            <div class="thumbnail">
+                            <div style="padding-top:15px" class="thumbnail">
                                 <img style="width:250px; height:150px" src="@item.Picture" alt="">
                                 <div class="caption">
                                     <h4 class="pull-right"></h4>
@@ -27,23 +27,24 @@
 
             </div>
         </div>
-       }
-       else
-       {
+                    }
+                    else
+                    {
                         <div class="container">
                             <div class="row">
+                                <h4 style="color:gray">Recept som innehåller matvaror som snart går ut</h4>
 
-                                @{for (int i = 0; i < 9; i++)
+                                @{for (int i = 0; i < 3; i++)
                                     {
                                         <div class="col-sm-4 col-lg-4 col-md-4">
-                                            <div class="thumbnail">
-                                                <img style="width:320px; height:150px" src="@Model[i].Picture" alt="">
+                                            <div style="padding-top:15px" class="thumbnail">
+                                                <img style="width:250px; height:150px" src="@Model.expiringRecipes[i].Picture" alt="">
                                                 <div class="caption">
                                                     <h4 class="pull-right"></h4>
                                                     <h4>
-                                                        <a href="/User/RecipeDetails/@Model[i].RecipeId">@Model[i].Title</a>
+                                                        <a href="/User/RecipeDetails/@Model.expiringRecipes[i].RecipeId">@Model.expiringRecipes[i].Title</a>
                                                     </h4>
-                                                    @Html.Partial("_PrintRecipeShortInfo", Model[i])
+                                                    @Html.Partial("_PrintRecipeShortInfo", Model.expiringRecipes[i])
                                                 </div>
                                             </div>
                                         </div>
@@ -52,7 +53,62 @@
 
                             </div>
                         </div>
-     }
+                                    }
+
+
+                                    
+                                    if (Model.matchedRecipes.Count < 6)
+                                    {
+                                        <div class="container">
+                                            <div class="row">
+                                                <h4 style="color:gray">Recept som innehåller övriga matvaror</h4>
+
+                                                @{foreach (var item in Model.matchedRecipes)
+                                                    {
+                                                        <div class="col-sm-4 col-lg-4 col-md-4">
+                                                            <div style="padding-top:15px" class="thumbnail">
+                                                                <img style="width:250px; height:150px" src="@item.Picture" alt="">
+                                                                <div class="caption">
+                                                                    <h4 class="pull-right"></h4>
+                                                                    <h4>
+                                                                        <a href="/User/RecipeDetails/@item.RecipeId">@item.Title</a>
+                                                                    </h4>
+                                                                    @Html.Partial("_PrintRecipeShortInfo", item)
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                }
+
+                                            </div>
+                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="container">
+                                                            <div class="row">
+                                                                <h4 style="color:gray">Recept som innehåller övriga matvaror</h4>
+
+                                                                @{for (int i = 0; i < 6; i++)
+                                                                    {
+                                                                        <div class="col-sm-4 col-lg-4 col-md-4">
+                                                                            <div style="padding-top:15px" class="thumbnail">
+                                                                                <img style="width:250px; height:150px" src="@Model.matchedRecipes[i].Picture" alt="">
+                                                                                <div class="caption">
+                                                                                    <h4 class="pull-right"></h4>
+                                                                                    <h4>
+                                                                                        <a href="/User/RecipeDetails/@Model.matchedRecipes[i].RecipeId">@Model.matchedRecipes[i].Title</a>
+                                                                                    </h4>
+                                                                                    @Html.Partial("_PrintRecipeShortInfo", Model.matchedRecipes[i])
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    }
+                                                                }
+
+                                                            </div>
+                                                        </div>
+                                                                    }
 }
 
 <style>
