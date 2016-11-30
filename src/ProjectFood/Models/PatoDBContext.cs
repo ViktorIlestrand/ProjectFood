@@ -449,6 +449,26 @@ namespace ProjectFood.Models.Entities
             var result1 = GetRecipesWithFoodItems(user, expiringFoodItems);
             var result2 = GetMatchingRecipes(user);
 
+            var indexesToRemove = new List<int>();
+
+            for (int i = 0; i < result2.Count; i++)
+            {
+                foreach (var expiringRecipe in result1)
+                {
+                    if (result2[i].Title == expiringRecipe.Title )
+                    {
+                        indexesToRemove.Add(i);
+                    }
+                }
+            }
+
+            indexesToRemove.Reverse();
+
+            foreach (var index in indexesToRemove)
+            {
+                result2.RemoveAt(index);
+            }
+
             viewModel.expiringRecipes = result1;
             viewModel.matchedRecipes = result2;
 
