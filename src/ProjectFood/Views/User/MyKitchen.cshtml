@@ -8,7 +8,7 @@
         padding-top: 130px;
     }
 
-    td, thead {
+    td.point, th.point {
         cursor: pointer;
     }
 
@@ -27,13 +27,14 @@
                 <h2 style="text-align:center; color:#fed136">LÄGG TILL MATVARA</h2>
             <br />
             
-            <input id="myFood" class="form-control" placeholder="Sök Matvara">
+            <input id="myFood" class="form-control" placeholder="Sök matvara">
             <br />
             
 
                 <table id="log" class="tablesorter table table-striped">
+
                     @{int index = 0; }
-                    <thead><tr> <th>Råvara</th> <th>Utgångsdatum</th><th>Ta bort</th> </tr></thead>
+                    <thead><tr> <th class="point">Råvara</th> <th class="point">Utgångsdatum</th><th class="pull-left">Ta bort</th> </tr></thead>
                     <tbody>
                         @{foreach (var item in Model)
             {
@@ -42,8 +43,8 @@
 
                                 <tr id="@index">
                                     <td id="denna">@item.FoodItem.Name</td>
-                                    <td id="@index" onclick="changeDate(@index)" style="color:@color">@date</td>
-                                    <td onclick="removeItem('@item.FoodItem.Name', @index)"><span class="glyphicon glyphicon-remove"></span></td>
+                                    <td id="@index" class="point" onclick="changeDate(@index)" style="color:@color">@date</td>
+                                    <td class="point" onclick="removeItem('@item.FoodItem.Name', @index)"><span class="glyphicon glyphicon-remove pull-right"></span></td>
                                 </tr>
                                 index++;
                             }
