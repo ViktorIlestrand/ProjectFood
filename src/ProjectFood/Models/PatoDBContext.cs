@@ -401,5 +401,19 @@ namespace ProjectFood.Models.Entities
 
             return recipeDetailsVM;
         }
+
+        public async void AddFoodItemToDB(string name, int foodType)
+        {
+            var newFoodItem = new FoodItem
+            {
+                Name = name,
+                FoodTypeId = foodType
+            };
+
+            FoodItem.Add(newFoodItem);
+
+            await this.SaveChangesAsync();
+            
+        }
     }
 }
