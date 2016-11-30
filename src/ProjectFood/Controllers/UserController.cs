@@ -86,12 +86,11 @@ namespace ProjectFood.Controllers
 
         public async Task<IActionResult> MyKitchen()
         {
-            //Här hämtar vi ut Loula.Users alla proppar och lagrar i en Userinstans som vi kallar loulaUser
             var loulaUser = await context.GetLoulaUser(User);
-            var id = loulaUser.Id;
-            var myKitchenVM = new MyKitchenVM(loulaUser.UserFoodItem.ToList(), context.GetPopularFoodItems(10));
 
-            return View(myKitchenVM);
+            var viewModel = context.GetUserFoodItemVMList(loulaUser);
+
+            return View(viewModel);
         }
 
         [AllowAnonymous]

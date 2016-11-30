@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ProjectFood.Models.ViewModels.AdminVM;
@@ -21,6 +22,12 @@ namespace ProjectFood.Models.Entities
 
         }
 
+        public UserFoodItemVM[] GetUserFoodItemVMList(User loulaUser)
+        {
+            var source = loulaUser.UserFoodItem;
+            var viewModel = Mapper.Map<UserFoodItemVM[]>(source);
+            return viewModel;
+        }
 
         //Inparametern kommer in med hjälp av den icke-persistenta cookien (User.Identity.Name)
         public async Task<User> GetLoulaUser(ClaimsPrincipal user)
