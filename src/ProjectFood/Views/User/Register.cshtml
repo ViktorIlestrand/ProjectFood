@@ -9,55 +9,58 @@
     }
 </style>
 <body>
+    <div class="container" style="width: 60%">
+        <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+            <h1 style="text-align:center">Skapa ny Användare</h1>
+            <br />
+            <br />
+            <div class="row">
+                <div class="col-md-8">
 
-    <h1 class="col-md-offset-4">Skapa ny Användare</h1>
-    <br />
-    <br />
-    <div class="row">
-        <div class="col-md-8">
+                    <form asp-controller="user" asp-action="register" class="form-horizontal">
+                        <div class="form-group">
+                            <label asp-for="UserName" class="col-md-6 control-label"></label>
+                            <div class="col-md-6">
+                                <input asp-for="UserName" class="form-control" />
+                                <span asp-validation-for="UserName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Email" class="col-md-6 control-label"></label>
+                            <div class="col-md-6">
+                                <input asp-for="Email" class="form-control" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
 
-            <form asp-controller="user" asp-action="register" class="form-horizontal">
-                <div class="form-group">
-                    <label asp-for="UserName" class="col-md-6 control-label"></label>
-                    <div class="col-md-5">
-                        <input asp-for="UserName" class="form-control" />
-                        <span asp-validation-for="UserName" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Email" class="col-md-6 control-label"></label>
-                    <div class="col-md-5">
-                        <input asp-for="Email" class="form-control" />
-                        <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Password" class="col-md-6 control-label"></label>
+                            <div class="col-md-6">
+                                <input asp-for="Password" class="form-control" />
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ComparedPassword" class="col-md-6 control-label"></label>
+                            <div class="col-md-6">
+                                <input asp-for="ComparedPassword" class="form-control" />
+                                <span asp-validation-for="ComparedPassword" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <div class="col-md-offset-6 col-md-10">
+                                <button type="submit" class="btn btn-default">Skapa användare</button>
+                            </div>
+                        </div>
+                        <br />
+                        <p class="col-md-offset-6 col-md-10">
+                            <a asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]"><b>Har du redan ett konto? Logga in!</b></a>
+                        </p>
+                    </form>
 
-                    </div>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Password" class="col-md-6 control-label"></label>
-                    <div class="col-md-5">
-                        <input asp-for="Password" class="form-control" />
-                        <span asp-validation-for="Password" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label asp-for="ComparedPassword" class="col-md-6 control-label"></label>
-                    <div class="col-md-5">
-                        <input asp-for="ComparedPassword" class="form-control" />
-                        <span asp-validation-for="ComparedPassword" class="text-danger"></span>
-                    </div>
-                </div>
-                <br />
-                <div class="form-group">
-                    <div class="col-md-offset-6 col-md-10">
-                        <button type="submit" class="btn btn-default">Skapa användare</button>
-                    </div>
-                </div>
-                <br />
-                <p class="col-md-offset-6 col-md-10">
-                    <a asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]"><b>Har du redan ett konto? Logga in!</b></a>
-                </p>
-            </form>
-
+            </div>
         </div>
     </div>
 </body>
