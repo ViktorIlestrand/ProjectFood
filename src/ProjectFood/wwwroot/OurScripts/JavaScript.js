@@ -86,7 +86,7 @@ function removeItem(foodName, id) {
 
 function changeDate(id) {
 
-    $('table#log tr#' + id).children('#' + id).prop('outerHTML', '<td id="' + id + '"><input type="text" id="datepicker' + id + '"></td>');
+    $('table#log tr#' + id).children('#' + id).prop('outerHTML', '<td id="' + id + '"><input type="text" class="form-control" style="width: 80px" id="datepicker' + id + '"></td>');
     $('#datepicker' + id ).show();
     $('#selectedDateIndex').val(id);
     pickDate(id);
