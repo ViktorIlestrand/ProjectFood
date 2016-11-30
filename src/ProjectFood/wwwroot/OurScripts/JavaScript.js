@@ -57,14 +57,13 @@ $(function () {
         }
     });
 });
-$(function () {
+function pickDate (id) {
     $("#datepicker").datepicker({
         dateFormat: 'yy-mm-dd',
         onSelect: function (dateText, inst) {
             var date = $(this).val();
             var dateIndex = $('#selectedDateIndex').val();
-            $('table#log tr#' + dateIndex).children('#' + dateIndex).html(date.toString());
-            $("#datepicker").hide();
+            $('table#log tr#' + id).children('#' + id).prop('outerHTML', '<td id="' + id + '" onclick="changeDate(' + id + ')">' + date + '</td>');
             //plocka fram userfooditem
             var foodName = $('table#log tr#' + dateIndex).children('#denna').html();
 
@@ -83,8 +82,7 @@ $(function () {
             });
         }
     });
-    $("#datepicker").hide();
-});
+};
 
 function removeItem(foodName, id) {
     $('table#log tr#' + id).remove();
@@ -103,8 +101,13 @@ function removeItem(foodName, id) {
 }
 
 function changeDate(id) {
+    //$('table#log tr#' + id).children('#' + id).html('<input type="text" id="datepicker">');
+    //$('table#log tr#' + id).children('#' + id).outerHTML('<td id="@index"><input type="text" id="datepicker"></td>');
+    $('table#log tr#' + id).children('#' + id).prop('outerHTML', '<td id="'+id+'"><input type="text" id="datepicker"></td>');
     $('#datepicker').show();
     $('#selectedDateIndex').val(id);
+    pickDate(id);
+    $('#datepicker').focus();
 }
 
 $(document).ready(function () {
