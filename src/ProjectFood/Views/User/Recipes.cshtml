@@ -34,21 +34,21 @@
                                     <a href="/User/RecipeDetails/@Model.expiringRecipes[i].RecipeId">@Model.expiringRecipes[i].Title</a>
                                 </h4>
                                 <b>Dessa varor bör användas snart:</b><br />
-                                -
-                                @foreach (var expiringUserIngredient in Model.expiringRecipes[i].ExpiringUserIngredients)
-                                {
-                                    foreach (var recipeIngredient in Model.expiringRecipes[i].Ingredients)
+                                <ul>
+                                    @foreach (var expiringUserIngredient in Model.expiringRecipes[i].ExpiringUserIngredients)
                                     {
-                                        if (expiringUserIngredient.FoodItem.Name == recipeIngredient.FoodItem.Name)
-                                        {
-                                            @expiringUserIngredient.FoodItem.Name<i> - </i>
 
+                                        foreach (var recipeIngredient in Model.expiringRecipes[i].Ingredients)
+                                        {
+                                            if (expiringUserIngredient.FoodItem.Name == recipeIngredient.FoodItem.Name)
+                                            {
+                                                <li>@expiringUserIngredient.FoodItem.Name &nbsp @expiringUserIngredient.Expires.ToString().Substring(0, 10)</li>
+
+                                            }
                                         }
                                     }
-                                }
-
-                                <br />
-                                <br />
+                                </ul>
+                                
                                 @Html.Partial("_PrintRecipeShortInfo", Model.expiringRecipes[i])
                             </div>
                         </div>
