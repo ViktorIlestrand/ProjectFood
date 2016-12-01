@@ -81,6 +81,9 @@ namespace ProjectFood.Controllers
 
             var boolen = signInManager.IsSignedIn(User);
 
+            context.StartKitchen(entityUser);
+            
+
             return RedirectToAction(nameof(MyKitchen));
         }
 

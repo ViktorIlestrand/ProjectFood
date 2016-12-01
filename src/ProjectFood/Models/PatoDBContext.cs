@@ -21,6 +21,13 @@ namespace ProjectFood.Models.Entities
             this.userManager = userManager;
 
         }
+        public void StartKitchen(User user)
+        {
+            var foodItem = FoodItem
+                .First(f => f.Name == "Salt");
+            user.UserFoodItem.Add(new UserFoodItem() { FoodItem = foodItem });
+            SaveChanges();
+        }
 
         public UserFoodItemVM[] GetUserFoodItemVMList(User loulaUser)
         {
