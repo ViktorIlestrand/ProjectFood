@@ -23,7 +23,8 @@
 }
 else
 {
-    <b>För detta recept saknar du: </b>
+    
+    <b>Du har <span style="color: forestgreen">@trueList.Count av @Model.Ingredients.Count ingredienser</span>. Du saknar: </b>
     <ul>
         @foreach (var item in Model.IngredientMatch)
         {

@@ -37,6 +37,16 @@
                                     <ul>
                                         @foreach (var expiringUserIngredient in Model.expiringRecipes[i].ExpiringUserIngredients)
                                         {
+                            <img style="width:250px; height:150px" src="@Model.expiringRecipes[i].Picture" alt="">
+                            <div class="caption">
+                                <h4 class="pull-right"></h4>
+                                <h4>
+                                    <a href="/User/RecipeDetails/@Model.expiringRecipes[i].RecipeId"><span style="color: darkorange"> @Model.expiringRecipes[i].Title</span></a>
+                                </h4>
+                                <b>Dessa varor bör användas snart:</b><br />
+                                <ul>
+                                    @foreach (var expiringUserIngredient in Model.expiringRecipes[i].ExpiringUserIngredients)
+                                    {
 
                                             foreach (var recipeIngredient in Model.expiringRecipes[i].Ingredients)
                                             {
@@ -87,7 +97,7 @@
                             <div class="caption">
                                 <h4 class="pull-right"></h4>
                                 <h4>
-                                    <a href="/User/RecipeDetails/@Model.matchedRecipes[i].RecipeId">@Model.matchedRecipes[i].Title</a>
+                                    <a href="/User/RecipeDetails/@Model.matchedRecipes[i].RecipeId"><span style="color: darkorange">@Model.matchedRecipes[i].Title</span></a>
                                 </h4>
                                 @Html.Partial("_PrintRecipeShortInfo", Model.matchedRecipes[i])
                             </div>
