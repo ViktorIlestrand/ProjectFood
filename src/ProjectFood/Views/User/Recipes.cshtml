@@ -27,31 +27,31 @@
                 {
                     <div class="col-sm-4 col-lg-4 col-md-4">
                         <div style="padding-top:15px" class="thumbnail">
-                            <img style="width:250px; height:150px" src="@Model.expiringRecipes[i].Picture" alt="">
-                            <div class="caption">
-                                <h4 class="pull-right"></h4>
-                                <h4>
-                                    <a href="/User/RecipeDetails/@Model.expiringRecipes[i].RecipeId">@Model.expiringRecipes[i].Title</a>
-                                </h4>
-                                <b>Dessa varor bör användas snart:</b><br />
-                                <ul>
-                                    @foreach (var expiringUserIngredient in Model.expiringRecipes[i].ExpiringUserIngredients)
-                                    {
-
-                                        foreach (var recipeIngredient in Model.expiringRecipes[i].Ingredients)
+                            <a href="/User/RecipeDetails/@Model.expiringRecipes[i].RecipeId"><img style="width:250px; height:150px" src="@Model.expiringRecipes[i].Picture" alt=""></a>
+                                <div class="caption">
+                                    <h4 class="pull-right"></h4>
+                                    <h4>
+                                        <a href="/User/RecipeDetails/@Model.expiringRecipes[i].RecipeId">@Model.expiringRecipes[i].Title</a>
+                                    </h4>
+                                    <b>Dessa varor bör användas snart:</b><br />
+                                    <ul>
+                                        @foreach (var expiringUserIngredient in Model.expiringRecipes[i].ExpiringUserIngredients)
                                         {
-                                            if (expiringUserIngredient.FoodItem.Name == recipeIngredient.FoodItem.Name)
-                                            {
-                                                <li>@expiringUserIngredient.FoodItem.Name &nbsp @expiringUserIngredient.Expires.ToString().Substring(0, 10)</li>
 
+                                            foreach (var recipeIngredient in Model.expiringRecipes[i].Ingredients)
+                                            {
+                                                if (expiringUserIngredient.FoodItem.Name == recipeIngredient.FoodItem.Name)
+                                                {
+                                                    <li>@expiringUserIngredient.FoodItem.Name &nbsp @expiringUserIngredient.Expires.ToString().Substring(0, 10)</li>
+
+                                                }
                                             }
                                         }
-                                    }
-                                </ul>
-                                
-                                @Html.Partial("_PrintRecipeShortInfo", Model.expiringRecipes[i])
-                            </div>
-                        </div>
+                                    </ul>
+
+                                    @Html.Partial("_PrintRecipeShortInfo", Model.expiringRecipes[i])
+                                </div>
+</div>
                     </div>
                 }
             </div>
@@ -83,7 +83,7 @@
 
                     <div class="col-sm-4 col-lg-4 col-md-4">
                         <div style="padding-top:15px" class="thumbnail">
-                            <img style="width:250px; height:150px" src="@Model.matchedRecipes[i].Picture" alt="">
+                            <a href="/User/RecipeDetails/@Model.matchedRecipes[i].RecipeId"><img style="width:250px; height:150px" src="@Model.matchedRecipes[i].Picture" alt=""></a>
                             <div class="caption">
                                 <h4 class="pull-right"></h4>
                                 <h4>
