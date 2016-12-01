@@ -156,88 +156,91 @@ namespace ProjectFood.Models.Entities
             var recipes = GetAllRecipes();
             //recipesMatched återspeglar en lista på recept som innehåller samtliga fooditems som är på väg att gå ut(1 eller flera)
             var recipesMatched = new List<Recipe>();
-
-            bool resultIsEmpty = true;
-            int numberOfUserfoodItems = userFoodItems.Count;
-
-            while (resultIsEmpty)
+            var recipeVMsToReturn = new List<RecipeVM>();
+            if (userFoodItems.Count != 0)
             {
+                bool resultIsEmpty = true;
+                int numberOfUserfoodItems = userFoodItems.Count;
 
-                foreach (var recipe in recipes)
+                while (resultIsEmpty)
                 {
-                    var recipeingredients = GetFoodItemForRecipe(recipe);
-                    //matchedFoodItems håller reda på hur många fooditems som fått träff i receptet
-                    int matchedFoodItems = 0;
 
-                    foreach (var ingredient in recipeingredients)
+                    foreach (var recipe in recipes)
                     {
-                        var foodItems = new List<FoodItem>();
+                        var recipeingredients = GetFoodItemForRecipe(recipe);
+                        //matchedFoodItems håller reda på hur många fooditems som fått träff i receptet
+                        int matchedFoodItems = 0;
 
-                        foreach (var item in userFoodItems)
+                        foreach (var ingredient in recipeingredients)
                         {
-                            foodItems.Add(item.FoodItem);
-                        }
+                            var foodItems = new List<FoodItem>();
 
-                        foreach (var fooditem in foodItems)
-                        {
-                            if (fooditem == ingredient.FoodItem)
+                            foreach (var item in userFoodItems)
                             {
-                                //om vi får träff plusar vi på matchedfootitems
-                                matchedFoodItems++;
-                                break;
+                                foodItems.Add(item.FoodItem);
+                            }
+
+                            foreach (var fooditem in foodItems)
+                            {
+                                if (fooditem == ingredient.FoodItem)
+                                {
+                                    //om vi får träff plusar vi på matchedfootitems
+                                    matchedFoodItems++;
+                                    break;
+                                }
                             }
                         }
+                        //Här checkar vi om vi har lika många träffar som fooditems. I så fall har vi ett matchande recept och
+                        //lägger till det i listan över recept som innehåller fooditemsen vi har skickat in
+                        if (matchedFoodItems == numberOfUserfoodItems)
+                        {
+                            recipesMatched.Add(recipe);
+                        }
                     }
-                    //Här checkar vi om vi har lika många träffar som fooditems. I så fall har vi ett matchande recept och
-                    //lägger till det i listan över recept som innehåller fooditemsen vi har skickat in
-                    if (matchedFoodItems == numberOfUserfoodItems)
+                    if (recipesMatched.Count == 0)
                     {
-                        recipesMatched.Add(recipe);
+                        numberOfUserfoodItems--;
                     }
-                }
-                if (recipesMatched.Count == 0)
-                {
-                    numberOfUserfoodItems--;
-                }
-                else
-                {
-                    resultIsEmpty = false;
-                }
-            }
-
-            //det är här jag börjar reflektera över hur effektiv vår samt min kod egentligen är, men jag kör på ändå.
-            //... så vi plockar ut en vanlig matchlista med hjälp av user
-            var recipeVMsToReturn = GetMatchingRecipes(user);
-            var indexesToRemove = new List<int>();
-
-
-            for (int i = 0; i < recipeVMsToReturn.Count; i++)
-            {
-                bool keepRecipeInList = false;
-                foreach (var recipe in recipesMatched)
-                {
-                    //om receptens namn stämmer med varandra behåller vi receptet i listan av VMs som kommmer returneras
-                    if (recipe.Title == recipeVMsToReturn[i].Title)
+                    else
                     {
-                        keepRecipeInList = true;
-                        break;
+                        resultIsEmpty = false;
                     }
                 }
-                //annars slänger vi ut den VMen.
-                if (!keepRecipeInList)
+
+                //det är här jag börjar reflektera över hur effektiv vår samt min kod egentligen är, men jag kör på ändå.
+                //... så vi plockar ut en vanlig matchlista med hjälp av user
+                recipeVMsToReturn = GetMatchingRecipes(user);
+                var indexesToRemove = new List<int>();
+
+
+                for (int i = 0; i < recipeVMsToReturn.Count; i++)
                 {
-                    indexesToRemove.Add(i);
+                    bool keepRecipeInList = false;
+                    foreach (var recipe in recipesMatched)
+                    {
+                        //om receptens namn stämmer med varandra behåller vi receptet i listan av VMs som kommmer returneras
+                        if (recipe.Title == recipeVMsToReturn[i].Title)
+                        {
+                            keepRecipeInList = true;
+                            break;
+                        }
+                    }
+                    //annars slänger vi ut den VMen.
+                    if (!keepRecipeInList)
+                    {
+                        indexesToRemove.Add(i);
+                    }
+
                 }
 
+
+                indexesToRemove.Reverse();
+
+                foreach (var index in indexesToRemove)
+                {
+                    recipeVMsToReturn.RemoveAt(index);
+                }
             }
-
-            indexesToRemove.Reverse();
-
-            foreach (var index in indexesToRemove)
-            {
-                recipeVMsToReturn.RemoveAt(index);
-            }
-
             return recipeVMsToReturn.OrderByDescending(s => s.MatchPercentage).ToList();
             //sen börjar vi undersöka om VM-receptet finns med i matchedrecipes
 
@@ -301,11 +304,13 @@ namespace ProjectFood.Models.Entities
                 }
 
                 double matchpercentage = GetMatchPercentage(listOfFoodMatches);
+
                 var recipevm = new RecipeVM(recipe.Id, recipe.Title, recipe.Portions, recipeingredients, listOfFoodMatches, matchpercentage, recipe.Instructions, recipe.ImageUrl, recipe.CookingTime);
                 var expiringUserIngredient = CheckExpiringUserFoodItems(user);
 
                 recipevm.ExpiringUserIngredients = expiringUserIngredient;
                 recipevmsToReturn.Add(recipevm);
+
             }
 
             var sortedList = recipevmsToReturn.OrderByDescending(p => p.MatchPercentage).ToList();
@@ -361,7 +366,7 @@ namespace ProjectFood.Models.Entities
             return result;
         }
 
-        private User GetExpiryDates (User user)
+        private User GetExpiryDates(User user)
         {
             var result = User
                 .Include(p => p.UserFoodItem)
@@ -382,7 +387,7 @@ namespace ProjectFood.Models.Entities
             //loopar igenom användarens matvarors utgångsdatum
             foreach (var item in user.UserFoodItem)
             {
-                var expiryDate = item.Expires.GetValueOrDefault();   
+                var expiryDate = item.Expires.GetValueOrDefault();
 
                 //nullcheck för DateTime (null är 0001-01-01 00:00:00)
                 if (expiryDate.Year > 1)
@@ -390,7 +395,7 @@ namespace ProjectFood.Models.Entities
                     var result = DateTime.Compare(dateTimeNow, expiryDate);
                     //om matvaran är på väg att gå ut så lägger vi till den i listan foodItemsExpiring
                     if (result >= 0)
-                    foodItemsExpiring.Add(item);
+                        foodItemsExpiring.Add(item);
                 }
                 else
                 {
@@ -424,7 +429,7 @@ namespace ProjectFood.Models.Entities
             FoodItem.Add(newFoodItem);
 
             await this.SaveChangesAsync();
-            
+
         }
         public AddFoodItemVM GetAllFoodTypes()
         {
@@ -465,7 +470,7 @@ namespace ProjectFood.Models.Entities
             {
                 foreach (var expiringRecipe in expiringRecipes)
                 {
-                    if (matchingRecipes[i].Title == expiringRecipe.Title )
+                    if (matchingRecipes[i].Title == expiringRecipe.Title)
                     {
                         indexesToRemove.Add(i);
                     }

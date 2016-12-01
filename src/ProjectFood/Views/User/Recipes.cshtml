@@ -5,19 +5,25 @@
 
     int loopAmount = 0;
 
-    if (Model.expiringRecipes.Count < 3)
-    {
-        loopAmount = Model.expiringRecipes.Count;
-    }
-    else
-    {
-        loopAmount = 3;
 
-    }
-    <div class="container">
-        <div class="row">
-            <h4 style="color:gray">Recept som innehåller matvaror som snart går ut</h4>
-            @{for (int i = 0; i < loopAmount; i++)
+    @if (Model.expiringRecipes.Count != 0)
+    {
+
+        if (Model.expiringRecipes.Count < 3)
+        {
+            loopAmount = Model.expiringRecipes.Count;
+        }
+        else
+        {
+            loopAmount = 3;
+
+        }
+        <div class="container">
+            <div class="row">
+
+                <h4 style="color:gray">Recept som innehåller matvaror som snart går ut</h4>
+
+                @for (int i = 0; i < loopAmount; i++)
                 {
                     <div class="col-sm-4 col-lg-4 col-md-4">
                         <div style="padding-top:15px" class="thumbnail">
@@ -32,7 +38,7 @@
                                 @foreach (var expiringUserIngredient in Model.expiringRecipes[i].ExpiringUserIngredients)
                                 {
                                     foreach (var recipeIngredient in Model.expiringRecipes[i].Ingredients)
-                                    {                                       
+                                    {
                                         if (expiringUserIngredient.FoodItem.Name == recipeIngredient.FoodItem.Name)
                                         {
                                             @expiringUserIngredient.FoodItem.Name<i> - </i>
@@ -40,7 +46,7 @@
                                         }
                                     }
                                 }
-                                
+
                                 <br />
                                 <br />
                                 @Html.Partial("_PrintRecipeShortInfo", Model.expiringRecipes[i])
@@ -48,11 +54,9 @@
                         </div>
                     </div>
                 }
-            }
-
+            </div>
         </div>
-    </div>
-
+    }
     @if (Model.matchedRecipes.Count < 6)
     {
         loopAmount = Model.matchedRecipes.Count;
@@ -62,29 +66,39 @@
         loopAmount = 6;
 
     }
-                <div class="container">
-                    <div class="row">
-                        <h4 style="color:gray">Recept som innehåller övriga matvaror</h4>
 
-                        @{for (int i = 0; i < loopAmount; i++)
-                            {
-                                <div class="col-sm-4 col-lg-4 col-md-4">
-                                    <div style="padding-top:15px" class="thumbnail">
-                                        <img style="width:250px; height:150px" src="@Model.matchedRecipes[i].Picture" alt="">
-                                        <div class="caption">
-                                            <h4 class="pull-right"></h4>
-                                            <h4>
-                                                <a href="/User/RecipeDetails/@Model.matchedRecipes[i].RecipeId">@Model.matchedRecipes[i].Title</a>
-                                            </h4>
-                                            @Html.Partial("_PrintRecipeShortInfo", Model.matchedRecipes[i])
-                                        </div>
-                                    </div>
-                                </div>
-                            }
-                        }
+    <div class="container">
+        <div class="row">
+            @if (Model.expiringRecipes.Count != 0)
+            {
+                <h4 style="color:gray">Recept som innehåller dina övriga matvaror</h4>
+            }
+            else
+            {
+                <h4 style="color:gray">Recept som matchar dina matvaror</h4>
+            }
+            @{for (int i = 0; i < loopAmount; i++)
+                {
+                    if (@Model.matchedRecipes[i].MatchPercentage >= 0.5) { 
 
+                    <div class="col-sm-4 col-lg-4 col-md-4">
+                        <div style="padding-top:15px" class="thumbnail">
+                            <img style="width:250px; height:150px" src="@Model.matchedRecipes[i].Picture" alt="">
+                            <div class="caption">
+                                <h4 class="pull-right"></h4>
+                                <h4>
+                                    <a href="/User/RecipeDetails/@Model.matchedRecipes[i].RecipeId">@Model.matchedRecipes[i].Title</a>
+                                </h4>
+                                @Html.Partial("_PrintRecipeShortInfo", Model.matchedRecipes[i])
+                            </div>
+                        </div>
                     </div>
-                </div>
+                    }
+                }
+            }
+
+        </div>
+    </div>
 }
 }
 
