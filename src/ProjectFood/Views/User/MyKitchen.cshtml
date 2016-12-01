@@ -8,7 +8,7 @@
         padding-top: 130px;
     }
 
-    td.point, th.point {
+    span.point, th.point {
         cursor: pointer;
     }
 
@@ -29,8 +29,8 @@
 
     <div class="container" style="width: 50%">
         <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12" >
-                <h2 style="text-align:center; color:#fed136">LÄGG TILL MATVARA I DITT KÖK</h2>
-                <h4 style="text-align:center; color:rgb(164, 163, 132)">Vi matchar recept efter dina matvaror och deras utgångsdatum <br /> <br /> <a asp-controller="User" asp-action="Recipes" style="color:rgba(254, 209, 54, 0.80)">Börja laga mat här!</a></h4>
+                <h1 style="text-align:center; color:#fed136">LÄGG TILL MATVAROR  I DITT KÖK</h1>
+                <h5 style="text-align:center; color:rgb(164, 163, 132)">Vi matchar recept efter dina matvaror och deras utgångsdatum <br /> <br /> <a asp-controller="User" asp-action="Recipes" style="color:rgba(254, 209, 54, 1)">Börja laga mat här!</a></h5>
                 
             <br />
             
@@ -50,8 +50,8 @@
 
                                 <tr id="@index">
                                     <td id="denna">@item.FoodItem.Name</td>
-                                    <td id="@index" class="point" onclick="changeDate(@index)" style="color:@color">@date</td>
-                                    <td class="point" onclick="removeItem('@item.FoodItem.Name', @index)"><span id="remove" class="glyphicon glyphicon-remove pull-right" ></span></td>
+                                    <td id="@index" style="color:@color"><span class="point" onclick="changeDate(@index)">@date</span></td>
+                                    <td><span id="remove" onclick="removeItem('@item.FoodItem.Name', @index)" class="glyphicon glyphicon-remove pull-right point"></span></td>
                                 </tr>
                                 index++;
                             }
