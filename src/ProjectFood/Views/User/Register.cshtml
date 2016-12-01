@@ -38,12 +38,14 @@
                             <div class="col-md-6">
                                 <input asp-for="Password" class="form-control" />
                                 <span asp-validation-for="Password" class="text-danger"></span>
+                                <i>Minst sex tecken och minst en stor bokstav</i>
                             </div>
                         </div>
+
                         <div class="form-group">
                             <label asp-for="ComparedPassword" class="col-md-6 control-label"></label>
                             <div class="col-md-6">
-                                <input asp-for="ComparedPassword" class="form-control" />
+                                <input asp-for="ComparedPassword" class="form-control"  />
                                 <span asp-validation-for="ComparedPassword" class="text-danger"></span>
                             </div>
                         </div>
@@ -54,8 +56,10 @@
                             </div>
                         </div>
                         <br />
+                        <br />
+                        <br />
                         <p class="col-md-offset-6 col-md-10">
-                            <a asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]"><b>Har du redan ett konto? Logga in!</b></a>
+                            <a asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]"><b style="color: darkorange">Har du redan ett konto? Logga in!</b></a>
                         </p>
                     </form>
 
