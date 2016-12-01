@@ -43,12 +43,12 @@
         }
     });
 });
-function pickDate (id) {
+function pickDate (id, oldDate) {
     $("#datepicker" + id ).datepicker({
         dateFormat: 'yy-mm-dd',
         onSelect: function (dateText, inst) {
             var date = $(this).val();
-            $('table#log tr#' + id).children('#' + id).prop('outerHTML', '<td id="' + id + '" onclick="changeDate(' + id + ')">' + date + '</td>');
+            $('table#log tr#' + id).children('#' + id).prop('outerHTML', '<td id="' + id + '" onclick="changeDate(' + id + ',\'' + date + '\')">' + date + '</td>');
 
             //plocka fram userfooditem
             var foodName = $('table#log tr#' + id).children('#denna').html();
@@ -65,6 +65,14 @@ function pickDate (id) {
                     console.log(data);
                 }
             });
+        },
+        onClose: function (dateText) {
+            if (dateText == "") {
+                $('table#log tr#' + id).children('#' + id).prop('outerHTML', '<td id="' + id + '" onclick="changeDate(' + id + ',\'' + oldDate + '\')">' + oldDate + '</td>');
+
+                //plocka fram userfooditem
+                var foodName = $('table#log tr#' + id).children('#denna').html();
+            }
         }
     });
 };
@@ -84,12 +92,12 @@ function removeItem(foodName, id) {
     });
 }
 
-function changeDate(id) {
+function changeDate(id,date) {
 
     $('table#log tr#' + id).children('#' + id).prop('outerHTML', '<td id="' + id + '"><input type="text" class="form-control" style="width: 80px" id="datepicker' + id + '"></td>');
     $('#datepicker' + id ).show();
     $('#selectedDateIndex').val(id);
-    pickDate(id);
+    pickDate(id,date);
     $('#datepicker' + id).focus();
 
 }
@@ -98,7 +106,3 @@ $(document).ready(function () {
     $("#log").tablesorter();
 }
 );
-
-function regretSetDate() {
-    alert("kommit in i regretSetDate()");
-}

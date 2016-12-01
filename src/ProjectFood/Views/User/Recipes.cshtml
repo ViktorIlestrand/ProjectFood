@@ -31,7 +31,7 @@
                             <div class="caption">
                                 <h4 class="pull-right"></h4>
                                 <h4>
-                                    <a href="/User/RecipeDetails/@Model.expiringRecipes[i].RecipeId">@Model.expiringRecipes[i].Title</a>
+                                    <a href="/User/RecipeDetails/@Model.expiringRecipes[i].RecipeId"><span style="color: darkorange"> @Model.expiringRecipes[i].Title</span></a>
                                 </h4>
                                 <b>Dessa varor bör användas snart:</b><br />
                                 <ul>
@@ -87,7 +87,7 @@
                             <div class="caption">
                                 <h4 class="pull-right"></h4>
                                 <h4>
-                                    <a href="/User/RecipeDetails/@Model.matchedRecipes[i].RecipeId">@Model.matchedRecipes[i].Title</a>
+                                    <a href="/User/RecipeDetails/@Model.matchedRecipes[i].RecipeId"><span style="color: darkorange">@Model.matchedRecipes[i].Title</span></a>
                                 </h4>
                                 @Html.Partial("_PrintRecipeShortInfo", Model.matchedRecipes[i])
                             </div>

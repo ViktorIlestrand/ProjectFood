@@ -50,7 +50,7 @@
 
                                 <tr id="@index">
                                     <td id="denna">@item.FoodItem.Name</td>
-                                    <td id="@index" style="color:@color"><span class="point" onclick="changeDate(@index)">@date</span></td>
+                                    <td id="@index" style="color:@color"><span class="point" onclick="changeDate(@index,'@date')">@date</span></td>
                                     <td><span id="remove" onclick="removeItem('@item.FoodItem.Name', @index)" class="glyphicon glyphicon-remove pull-right point"></span></td>
                                 </tr>
                                 index++;
