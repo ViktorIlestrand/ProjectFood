@@ -23,7 +23,7 @@ namespace ProjectFood.Models.ViewModels.UserVM
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Display(Name = "Upprepa Lösenord")]
+        [Display(Name = "Upprepa lösenord")]
         [Compare("Password", ErrorMessage ="Lösenorden matchar inte")]
         [DataType(DataType.Password)]
         public string ComparedPassword { get; set; }
