@@ -157,10 +157,11 @@ namespace ProjectFood.Models.Entities
             //recipesMatched återspeglar en lista på recept som innehåller samtliga fooditems som är på väg att gå ut(1 eller flera)
             var recipesMatched = new List<Recipe>();
             var recipeVMsToReturn = new List<RecipeVM>();
+            int numberOfUserfoodItems = userFoodItems.Count;
+
             if (userFoodItems.Count != 0)
             {
                 bool resultIsEmpty = true;
-                int numberOfUserfoodItems = userFoodItems.Count;
 
                 while (resultIsEmpty)
                 {
@@ -197,7 +198,7 @@ namespace ProjectFood.Models.Entities
                             recipesMatched.Add(recipe);
                         }
                     }
-                    if (recipesMatched.Count == 0)
+                    if (numberOfUserfoodItems != 0 && recipesMatched.Count == 0)
                     {
                         numberOfUserfoodItems--;
                     }
@@ -241,7 +242,15 @@ namespace ProjectFood.Models.Entities
                     recipeVMsToReturn.RemoveAt(index);
                 }
             }
-            return recipeVMsToReturn.OrderByDescending(s => s.MatchPercentage).ToList();
+            if (numberOfUserfoodItems != 0)
+            {
+                return recipeVMsToReturn.OrderByDescending(s => s.MatchPercentage).ToList();
+            }
+            else
+            {
+                var emptyResult = new List<RecipeVM>();
+                return emptyResult;
+            }
             //sen börjar vi undersöka om VM-receptet finns med i matchedrecipes
 
             //foreach (var item in tmplist)
