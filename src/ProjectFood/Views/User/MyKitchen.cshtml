@@ -45,7 +45,7 @@
                     <tbody>
                         @{foreach (var item in Model)
             {
-                                var date = item.Expires != null && item.Expires.ToString().Length > 9 ? item.Expires.ToString().Substring(0, 10) : "Saknar utgång";
+                                var date = item.Expires != null && item.Expires.ToString().Length > 9 ? item.Expires.ToString().Substring(0, 10) : "Ej inlagt";
                                 var color = item.HasExpired ? "Red" : "Black";
 
                                 <tr id="@index">
