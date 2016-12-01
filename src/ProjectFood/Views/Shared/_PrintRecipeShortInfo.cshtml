@@ -15,6 +15,11 @@
 @if (trueList.Count == Model.IngredientMatch.Count)
 {
     <b>Du har allt till detta recept!</b>
+    <ul></ul>
+    @for (int i = 0; i < 8; i++)
+    {
+        <br />
+    }
 }
 else
 {
@@ -27,9 +32,14 @@ else
                 <li>@item.FoodItem</li>
             }
         }
-
+        
     </ul>
-    
+    @for (int i = Model.IngredientMatch.Count - trueList.Count; i < 8; i++)
+    {
+        <br />
+    }
+
+
 }
 
 
