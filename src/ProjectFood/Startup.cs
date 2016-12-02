@@ -23,7 +23,10 @@ namespace ProjectFood
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath);
 
-            builder.AddUserSecrets();
+            if(env.IsDevelopment())
+                builder.AddUserSecrets();
+
+            builder.AddEnvironmentVariables();
             Configuration = builder.Build();     
         }
         public IConfigurationRoot Configuration { get; }
